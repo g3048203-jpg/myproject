@@ -38,7 +38,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Идеальный баланс 50% красный / 50% фиолетовый */
     .rich-bg {
       background: 
         radial-gradient(circle at 10% 20%, rgba(255, 26, 60, 0.28) 0%, transparent 50%),
@@ -86,13 +85,12 @@
       100% { transform: translateY(120%); }
     }
 
-    /* Нежный, глубокий фиолетовый неон для текста */
     .soft-violet-text {
       color: #df8eff;
       text-shadow: 0 0 30px rgba(189, 0, 255, 0.35);
     }
 
-    /* Ультра-плавное интро с красивейшим цветом */
+    /* Интро */
     #intro-screen {
       position: fixed;
       inset: 0;
@@ -124,7 +122,25 @@
       }
     }
 
-    /* Катящаяся таблетка справа */
+    /* Модальное окно лаборатории */
+    #lab-modal {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #lab-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    #lab-modal-content {
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #lab-modal.open #lab-modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Катящаяся таблетка */
     .scrolling-pill {
       position: fixed;
       right: 16px;
@@ -143,7 +159,7 @@
       .scrolling-pill { display: block; right: 24px; width: 16px; height: 52px; }
     }
 
-    /* Матово-глянцевые плашки с мягким откликом */
+    /* Матово-глянцевые плашки */
     .cyber-card {
       background: linear-gradient(135deg, rgba(35, 35, 48, 0.85) 0%, rgba(16, 16, 24, 0.95) 100%);
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -179,7 +195,6 @@
       opacity: 1;
     }
 
-    /* Магнитные кнопки */
     .btn-cyber {
       background: linear-gradient(135deg, #bd00ff 0%, #7000ff 100%);
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -191,7 +206,6 @@
       box-shadow: inset 0 1px 3px 0 rgba(255, 255, 255, 0.7), 0 14px 40px rgba(189, 0, 255, 0.8);
     }
 
-    /* Ультра-плавное появление при скролле */
     .reveal-on-scroll {
       opacity: 0;
       transform: translateY(70px) scale(0.94);
@@ -215,29 +229,49 @@
 </head>
 <body class="rich-bg antialiased font-sans">
 
-  <!-- РАНДОМНЫЕ ЦИФРОВЫЕ ШУМЫ -->
+  <!-- МОДАЛЬНОЕ ОКНО ЛАБОРАТОРИИ ДЛЯ КАПСУЛ -->
+  <div id="lab-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div id="lab-modal-content" class="cyber-card w-full max-w-lg p-6 sm:p-8 relative border border-neonViolet/50 shadow-2xl">
+      <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      
+      <div class="flex items-center gap-3 mb-6">
+        <div id="modal-icon" class="w-12 h-12 rounded-2xl bg-neonViolet/20 border border-neonViolet/40 flex items-center justify-center text-2xl">💊</div>
+        <div>
+          <span id="modal-tag" class="font-mono text-xs text-neonViolet uppercase tracking-widest">[ PROTOCOL // ACTIVE ]</span>
+          <h3 id="modal-title" class="font-display text-2xl font-bold text-white mt-0.5">Название капсулы</h3>
+        </div>
+      </div>
+
+      <p id="modal-desc" class="text-gray-300 text-sm sm:text-base leading-relaxed mb-8">
+        Описание выбранного протокола лаборатории...
+      </p>
+
+      <div class="flex items-center justify-between pt-4 border-t border-white/10">
+        <span class="font-mono text-xs text-gray-500">ENCRYPTED CHANNEL</span>
+        <a id="modal-link" href="#" target="_blank" class="px-6 py-3 rounded-xl btn-cyber text-white font-bold text-sm">
+          Открыть доступ ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЦИФРОВЫЕ ШУМЫ -->
   <div class="cyber-matrix-bg">
-    <div class="matrix-column">
-      010199 // MLT<br/>ENC_AES_256<br/>NODE_ACTIVE<br/>00412_PROTOCOL<br/>SYNTAX_OK
-    </div>
-    <div class="matrix-column">
-      PILL_STATE: LIVE<br/>CRYPTO_HASH<br/>SECURITY_L1<br/>CORE_LOADED<br/>10101101
-    </div>
-    <div class="matrix-column hidden sm:block">
-      SYSTEM_READY<br/>ACCESS_GRANTED<br/>VIBECODE_ENGINE<br/>0x7FF9A<br/>NEON_PULSE
-    </div>
-    <div class="matrix-column hidden md:block">
-      SECURE_LINK<br/>TCP_HANDSHAKE<br/>NEURAL_NET_v2<br/>0x0041A9
-    </div>
-    <div class="matrix-column hidden lg:block">
-      PROTOCOL_LOCK<br/>KEY_EXCHANGE<br/>MEMORY_MAP_01
-    </div>
+    <div class="matrix-column">010199 // MLT<br/>ENC_AES_256<br/>NODE_ACTIVE<br/>SYNTAX_OK</div>
+    <div class="matrix-column">PILL_STATE: LIVE<br/>CRYPTO_HASH<br/>SECURITY_L1</div>
+    <div class="matrix-column hidden sm:block">SYSTEM_READY<br/>ACCESS_GRANTED<br/>NEON_PULSE</div>
+    <div class="matrix-column hidden md:block">SECURE_LINK<br/>TCP_HANDSHAKE<br/>0x0041A9</div>
+    <div class="matrix-column hidden lg:block">PROTOCOL_LOCK<br/>KEY_EXCHANGE</div>
   </div>
 
   <!-- КАТЯЩАЯСЯ ТАБЛЕТКА -->
   <div class="scrolling-pill" id="scrollPill"></div>
 
-  <!-- ИНТРО С НЕВЕРОЯТНЫМ ПОБУКВЕННЫМ ПОЯВЛЕНИЕМ -->
+  <!-- ИНТРО -->
   <div id="intro-screen">
     <div class="text-center px-4">
       <h1 id="intro-text" class="font-display text-4xl sm:text-7xl font-black tracking-wider mb-8 sm:mb-10"></h1>
@@ -247,7 +281,6 @@
     </div>
   </div>
 
-  <!-- Двойной фон с балансом 50% красный / 50% фиолетовый -->
   <div class="fixed top-0 left-0 w-[50vw] h-[70vh] bg-crimsonRed/20 rounded-full blur-[180px] pointer-events-none -z-10 bg-breath"></div>
   <div class="fixed bottom-0 right-0 w-[50vw] h-[70vh] bg-neonViolet/20 rounded-full blur-[180px] pointer-events-none -z-10 bg-breath" style="animation-delay: -4.5s;"></div>
 
@@ -414,52 +447,57 @@
       </div>
     </section>
 
-    <!-- КАПСУЛЫ -->
+    <!-- КАПСУЛЫ (ОТКРЫВАЮТ МОДАЛЬНОЕ ОКНО ЛАБОРАТОРИИ) -->
     <section id="capsules" class="mt-24 sm:mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
       <h2 class="font-display text-3xl sm:text-5xl font-black text-center mb-12 sm:mb-16 tracking-tight">
         5 ЦИФРОВЫХ <span class="soft-violet-text">КАПСУЛ</span>
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="https://t.me/MLT_Dizain" target="_blank" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card block cursor-pointer group">
+        <!-- Дизайн -->
+        <div onclick="openModal('Дизайн', 'Современные интерфейсы, кибер-эстетика, UI/UX и визуальный стиль нового поколения.', 'https://t.me/MLT_Dizain', '🔵', 'DESIGN // 01')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card cursor-pointer group">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🔵</div>
             <h3 class="font-display text-2xl sm:text-3xl font-bold soft-violet-text mb-3">Дизайн ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Современные интерфейсы, кибер-эстетика, UI/UX и визуальный стиль нового поколения.</p>
           </div>
-        </a>
+        </div>
 
-        <a href="https://t.me/MLT_otnoshenia" target="_blank" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card block cursor-pointer group">
+        <!-- Отношения -->
+        <div onclick="openModal('Отношения', 'Психология влияния, коммуникации, связи и цифровой социальный интеллект.', 'https://t.me/MLT_otnoshenia', '🔴', 'RELATIONS // 02')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card cursor-pointer group">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🔴</div>
             <h3 class="font-display text-2xl sm:text-3xl font-bold soft-violet-text mb-3">Отношения ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Психология влияния, коммуникации, связи и цифровой социальный интеллект.</p>
           </div>
-        </a>
+        </div>
 
-        <a href="https://t.me/MLT_Psychology" target="_blank" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card block cursor-pointer group">
+        <!-- Психология -->
+        <div onclick="openModal('Психология', 'Контроль разума, биохакинг продуктивности, ментальная устойчивость.', 'https://t.me/MLT_Psychology', '⚪', 'PSYCHOLOGY // 03')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card cursor-pointer group">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">⚪</div>
             <h3 class="font-display text-2xl sm:text-3xl font-bold soft-violet-text mb-3">Психология ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Контроль разума, биохакинг продуктивности, ментальная устойчивость.</p>
           </div>
-        </a>
+        </div>
 
-        <a href="https://t.me/MLT_vibecoding" target="_blank" class="cyber-card p-7 sm:p-8 flex flex-col justify-between md:col-span-1.5 tilt-card block cursor-pointer group">
+        <!-- Вайбкодинг -->
+        <div onclick="openModal('Вайбкодинг', 'Замена старому кодингу. Полное обучение с нуля, продвинутые промты, готовые скрипты и практика.', 'https://t.me/MLT_vibecoding', '🟠', 'VIBECODING // 04')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between md:col-span-1.5 tilt-card cursor-pointer group">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🟠</div>
             <h3 class="font-display text-2xl sm:text-3xl font-bold soft-violet-text mb-3">Вайбкодинг ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Замена старому кодингу. Полное обучение с нуля, продвинутые промты, готовые скрипты и практика.</p>
           </div>
-        </a>
+        </div>
 
-        <a href="https://t.me/MLT_Zarabotok" target="_blank" class="cyber-card p-7 sm:p-8 flex flex-col justify-between md:col-span-1.5 tilt-card block cursor-pointer group">
+        <!-- Заработок -->
+        <div onclick="openModal('Заработок', 'Монетизация цифровых навыков, генерация трафика и построение стабильных денежных потоков.', 'https://t.me/MLT_Zarabotok', '🟢', 'EARNING // 05')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between md:col-span-1.5 tilt-card cursor-pointer group">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🟢</div>
             <h3 class="font-display text-2xl sm:text-3xl font-bold soft-violet-text mb-3">Заработок ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Монетизация цифровых навыков, генерация трафика и построение стабильных денежных потоков.</p>
           </div>
-        </a>
+        </div>
       </div>
     </section>
 
@@ -505,7 +543,7 @@
   </main>
 
   <script>
-    // Ультра-плавное побуквенное интро
+    // Побуквенное интро
     const introTextEl = document.getElementById('intro-text');
     const textString = "MLT PROJECT";
     textString.split('').forEach((char, index) => {
@@ -525,6 +563,27 @@
       }
     }
 
+    // Управление модальным окном лаборатории
+    function openModal(title, desc, link, icon, tag) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-desc').textContent = desc;
+      document.getElementById('modal-link').href = link;
+      document.getElementById('modal-icon').textContent = icon;
+      document.getElementById('modal-tag').textContent = `[ ${tag} ]`;
+      document.getElementById('lab-modal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('lab-modal').classList.remove('open');
+    }
+
+    // Закрытие по клику вне окна
+    document.getElementById('lab-modal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('lab-modal')) {
+        closeModal();
+      }
+    });
+
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       if (menu) menu.classList.toggle('open');
@@ -543,7 +602,6 @@
       });
     });
 
-    // Плавная катящаяся таблетка при скролле
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -565,7 +623,6 @@
 
     document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-    // Объемный 3D-наклон плашек
     document.querySelectorAll('.cyber-card').forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
