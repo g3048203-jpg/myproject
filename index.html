@@ -38,7 +38,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Богатый черно-красный живой фон */
     .rich-bg {
       background: 
         radial-gradient(circle at 15% 20%, rgba(255, 26, 60, 0.18) 0%, transparent 45%),
@@ -55,14 +54,49 @@
       animation: pulseGlow 7s ease-in-out infinite;
     }
 
-    /* Пурпурный неон */
-    .neon-violet-text {
-      background: linear-gradient(135deg, #ffffff 20%, #d14eff 70%, #bd00ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* Плавающие цифровые шумы и код на фоне */
+    .cyber-matrix-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -5;
+      overflow: hidden;
+      opacity: 0.12;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #bd00ff;
+      line-height: 1.4;
+      display: flex;
+      justify-content: space-around;
+      white-space: nowrap;
     }
 
-    /* Полноэкранный интро-слой */
+    .matrix-column {
+      animation: matrixFall 15s linear infinite;
+    }
+    .matrix-column:nth-child(2) { animation-duration: 22s; animation-delay: -5s; }
+    .matrix-column:nth-child(3) { animation-duration: 18s; animation-delay: -2s; }
+    .matrix-column:nth-child(4) { animation-duration: 25s; animation-delay: -8s; }
+
+    @keyframes matrixFall {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    /* Переливающийся фиолетовый неон для главных заголовков */
+    .shining-violet-text {
+      background: linear-gradient(135deg, #ffffff 10%, #e066ff 40%, #bd00ff 70%, #7000ff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shineText 5s linear infinite;
+    }
+
+    @keyframes shineText {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
     #intro-screen {
       position: fixed;
       inset: 0;
@@ -75,42 +109,52 @@
       transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
-    @keyframes fadeInAir {
-      0% { opacity: 0; transform: scale(0.94); filter: blur(12px); }
-      100% { opacity: 1; transform: scale(1); filter: blur(0px); }
+    /* Катящаяся фиолетовая таблетка справа */
+    .scrolling-pill {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      width: 16px;
+      height: 52px;
+      background: linear-gradient(180deg, #d14eff 0%, #7000ff 100%);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(189, 0, 255, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      z-index: 50;
+      pointer-events: none;
+      transition: transform 0.1s cubic-bezier(0, 0, 0.2, 1);
+      display: none;
     }
-    .intro-title {
-      animation: fadeInAir 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    @media(min-width: 1024px) {
+      .scrolling-pill { display: block; }
     }
 
-    /* Матовые серебряно-серые плашки с 3D-наклоном */
+    /* Благородные серебряные матово-глянцевые плашки */
     .cyber-card {
-      background: linear-gradient(135deg, rgba(28, 28, 38, 0.9) 0%, rgba(14, 14, 20, 0.95) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(135deg, rgba(35, 35, 48, 0.85) 0%, rgba(16, 16, 24, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 28px;
       box-shadow: 
-        inset 0 1px 2px 0 rgba(255, 255, 255, 0.2),
-        0 20px 40px -15px rgba(0, 0, 0, 0.8);
+        inset 0 1px 3px 0 rgba(255, 255, 255, 0.3),
+        0 20px 40px -15px rgba(0, 0, 0, 0.9);
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
-      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease;
     }
 
     .cyber-card:hover {
-      border-color: rgba(189, 0, 255, 0.5);
+      border-color: rgba(189, 0, 255, 0.6);
       box-shadow: 
-        inset 0 1px 3px 0 rgba(255, 255, 255, 0.35),
+        inset 0 1px 4px 0 rgba(255, 255, 255, 0.5),
         0 30px 60px -15px rgba(0, 0, 0, 0.95),
-        0 0 35px -5px rgba(189, 0, 255, 0.3);
+        0 0 40px -5px rgba(189, 0, 255, 0.4);
     }
 
-    /* Spotlight-эффект */
     .cyber-card::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(189, 0, 255, 0.12), transparent 60%);
+      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(189, 0, 255, 0.15), transparent 60%);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -120,16 +164,15 @@
       opacity: 1;
     }
 
-    /* Кнопки с фиолетовым неоном */
     .btn-cyber {
       background: linear-gradient(135deg, #bd00ff 0%, #7000ff 100%);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4), 0 8px 25px rgba(189, 0, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.5), 0 8px 25px rgba(189, 0, 255, 0.5);
       transition: all 0.25s ease;
     }
     .btn-cyber:hover {
       transform: translateY(-2px);
-      box-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.6), 0 12px 30px rgba(189, 0, 255, 0.6);
+      box-shadow: inset 0 1px 3px 0 rgba(255, 255, 255, 0.7), 0 12px 30px rgba(189, 0, 255, 0.7);
     }
     .btn-cyber:active {
       transform: scale(0.97);
@@ -137,40 +180,70 @@
 
     .reveal-on-scroll {
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(50px) scale(0.97);
+      filter: blur(8px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal-on-scroll.active {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
     }
   </style>
 </head>
 <body class="rich-bg antialiased font-sans">
 
+  <!-- ПЛАВАЮЩИЕ ЦИФРОВЫЕ ШУМЫ НА ФОНЕ -->
+  <div class="cyber-matrix-bg">
+    <div class="matrix-column">
+      01010199 // MLT<br/>
+      ENC_AES_256<br/>
+      NODE_ACTIVE<br/>
+      00412_PROTOCOL<br/>
+      SYNTAX_OK
+    </div>
+    <div class="matrix-column hidden sm:block">
+      PILL_STATE: LIVE<br/>
+      CRYPTO_HASH<br/>
+      SECURITY_L1<br/>
+      CORE_LOADED<br/>
+      10101101
+    </div>
+    <div class="matrix-column hidden md:block">
+      SYSTEM_READY<br/>
+      ACCESS_GRANTED<br/>
+      VIBECODE_ENGINE<br/>
+      0x7FF9A<br/>
+      NEON_PULSE
+    </div>
+  </div>
+
+  <!-- КАТЯЩАЯСЯ ФИОЛЕТОВАЯ ТАБЛЕТКА СПРАВА -->
+  <div class="scrolling-pill" id="scrollPill"></div>
+
   <!-- ПОЛНОЭКРАННОЕ ИНТРО -->
   <div id="intro-screen">
     <div class="text-center px-4">
-      <h1 class="font-display text-4xl sm:text-7xl font-black tracking-wider text-white intro-title mb-10">
-        MLT <span class="neon-violet-text">PROJECT</span>
+      <h1 class="font-display text-4xl sm:text-7xl font-black tracking-wider text-white mb-10">
+        MLT <span class="shining-violet-text">PROJECT</span>
       </h1>
-      <!-- Кнопка с прямым вызовом функции и дублированием клика -->
-      <button onclick="skipIntro()" id="skip-btn" class="px-8 py-3 rounded-full border border-white/15 bg-black/50 backdrop-blur-md text-xs font-mono uppercase tracking-widest text-gray-200 hover:text-white hover:border-neonViolet transition shadow-2xl cursor-pointer pointer-events-auto">
+      <button onclick="skipIntro()" class="px-8 py-3 rounded-full border border-white/20 bg-black/60 backdrop-blur-md text-xs font-mono uppercase tracking-widest text-gray-200 hover:text-white hover:border-neonViolet transition shadow-2xl cursor-pointer">
         [ ПРОПУСТИТЬ ]
       </button>
     </div>
   </div>
 
-  <!-- ФОНОВЫЕ СВЕТОВЫЕ ПЕРЕЛИВЫ -->
   <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[90vw] max-w-[1000px] h-[500px] bg-crimsonRed/15 rounded-full blur-[160px] pointer-events-none -z-10 bg-breath"></div>
 
   <!-- ШАПКА -->
-  <header class="sticky top-5 z-40 max-w-6xl mx-auto px-4 reveal-on-scroll">
+  <header class="sticky top-5 z-40 max-w-6xl mx-auto px-4 reveal-on-scroll" style="transition-delay: 0.1s;">
     <div class="cyber-card px-6 py-3.5 flex items-center justify-between backdrop-blur-xl">
       <a href="#" class="font-display font-black text-2xl tracking-tight text-white">MLT</a>
       <nav class="hidden md:flex items-center space-x-2 text-sm font-semibold">
         <a href="#about" class="px-4 py-2 rounded-full text-gray-300 hover:text-white transition">Лаборатория</a>
+        <a href="#projects" class="px-4 py-2 rounded-full text-gray-300 hover:text-white transition">Проекты</a>
         <a href="#capsules" class="px-4 py-2 rounded-full text-gray-300 hover:text-white transition">Капсулы</a>
+        <a href="#specs" class="px-4 py-2 rounded-full text-gray-300 hover:text-white transition">Система</a>
         <a href="#contact" class="px-5 py-2 rounded-full btn-cyber text-white font-bold">Связь</a>
       </nav>
       <a href="https://t.me/beloysa" target="_blank" class="px-5 py-2 rounded-full btn-cyber text-white text-xs sm:text-sm font-bold">
@@ -182,14 +255,13 @@
   <!-- ГЛАВНЫЙ КОНТЕНТ -->
   <main class="max-w-6xl mx-auto px-4 pt-12 pb-28">
 
-    <!-- HERO СЕКЦИЯ -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[70vh] reveal-on-scroll">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[70vh] reveal-on-scroll" style="transition-delay: 0.2s;">
       <div class="lg:col-span-7">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-neonViolet/10 border border-neonViolet/30 text-neonViolet mb-6">
           <span>⚡ Секретный протокол</span>
         </div>
         <h1 class="font-display text-5xl sm:text-7xl font-black tracking-tight leading-[0.95] mb-6">
-          MLT <span class="neon-violet-text">TEAM</span>
+          MLT <span class="shining-violet-text">TEAM</span>
         </h1>
         <p class="text-gray-400 text-lg sm:text-xl font-normal leading-relaxed max-w-xl mb-9">
           Закрытая цифровая экосистема нового поколения. Выбирай свою капсулу реальности. Никакой воды — только чистый контент и жесткая практика.
@@ -203,7 +275,7 @@
 
       <div class="lg:col-span-5 flex justify-center">
         <div class="w-full max-w-[420px] aspect-[4/5] cyber-card p-3 shadow-2xl flex items-center justify-center text-center relative">
-          <div class="text-gray-500 font-mono text-sm p-6 border border-dashed border-white/10 rounded-2xl w-full h-full flex flex-col items-center justify-center bg-black/40">
+          <div class="text-gray-400 font-mono text-sm p-6 border border-dashed border-white/15 rounded-2xl w-full h-full flex flex-col items-center justify-center bg-black/40">
             <span class="text-neonViolet text-3xl mb-2">💊</span>
             <span>Видео с бесконечным высыпанием таблеток</span>
           </div>
@@ -211,8 +283,7 @@
       </div>
     </div>
 
-    <!-- ЦИТАТА -->
-    <section class="mt-24 text-center reveal-on-scroll">
+    <section class="mt-24 text-center reveal-on-scroll" style="transition-delay: 0.1s;">
       <div class="cyber-card p-10 sm:p-14 max-w-4xl mx-auto backdrop-blur-xl">
         <p class="font-display text-2xl sm:text-3xl font-extrabold text-white leading-snug">
           «Каждая таблетка — это готовый инструмент для полной трансформации твоих цифровых навыков и реальности.»
@@ -221,38 +292,36 @@
       </div>
     </section>
 
-    <!-- РАЗДЕЛ "О НАС" И ДВЕ ПЛАШКИ -->
-    <section id="about" class="mt-32 reveal-on-scroll">
-      <h2 class="font-display text-4xl sm:text-5xl font-black text-center mb-16 tracking-tight neon-violet-text">
+    <!-- РАЗДЕЛ "О НАС" -->
+    <section id="about" class="mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
+      <h2 class="font-display text-4xl sm:text-5xl font-black text-center mb-16 tracking-tight shining-violet-text">
         О НАС
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Первая плашка слева -->
         <div class="cyber-card p-8 sm:p-10 flex flex-col justify-between tilt-card">
           <div>
             <div class="inline-block px-3 py-1 rounded-lg bg-neonViolet/10 text-neonViolet font-mono text-xs mb-6 border border-neonViolet/30">
               [ 01 // IDENTITY ]
             </div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold text-white mb-4">Кто мы</h3>
-            <p class="text-gray-300 text-base sm:text-lg leading-relaxed">
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-4">Кто мы</h3>
+            <p class="text-gray-400 text-base sm:text-lg leading-relaxed italic">
               Мы команда MLT. Развиваемся в сфере психологии, криптовалюты, заработка и вайбкодинга. Создаем собственную экосистему из пяти «таблеток», объединяем единомышленников и делимся практическим опытом.
             </p>
           </div>
         </div>
 
-        <!-- Вторая плашка справа -->
         <div class="cyber-card p-8 sm:p-10 flex flex-col justify-between tilt-card">
           <div>
             <div class="inline-block px-3 py-1 rounded-lg bg-crimsonRed/10 text-crimsonRed font-mono text-xs mb-6 border border-crimsonRed/30">
               [ 02 // THE PILL PROTOCOL ]
             </div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold text-white mb-6">
-              <span class="block text-white mb-1">MLT Community</span>
-              <span class="block text-gray-300 mb-1">Psychology</span>
-              <span class="block neon-violet-text">Crypto</span>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-6">
+              <span class="block mb-1">MLT Community</span>
+              <span class="block mb-1">Psychology</span>
+              <span class="block">Crypto</span>
             </h3>
-            <p class="text-gray-300 text-base sm:text-lg leading-relaxed">
+            <p class="text-gray-400 text-base sm:text-lg leading-relaxed italic">
               Флагманский проект «The Pill Protocol» объединяет закрытое комьюнити, передовые психологические практики и криптовалютные стратегии нового уровня.
             </p>
           </div>
@@ -260,65 +329,121 @@
       </div>
     </section>
 
+    <!-- РАЗДЕЛ "Проекты MLT" -->
+    <section id="projects" class="mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
+      <h2 class="font-display text-4xl sm:text-5xl font-black text-center mb-16 tracking-tight shining-violet-text">
+        Проекты MLT
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="cyber-card p-8 sm:p-10 flex flex-col justify-between tilt-card">
+          <div>
+            <div class="inline-block px-3 py-1 rounded-lg bg-neonViolet/10 text-neonViolet font-mono text-xs mb-6 border border-neonViolet/30">
+              [ PROTOCOL // 01 ]
+            </div>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-4">The Pill Protocol</h3>
+            <p class="text-gray-400 text-base sm:text-lg leading-relaxed italic">
+              Практическая лаборатория навыков. Закрытые гайды, алгоритмы вайбкодинга, генерация контента нового поколения и инструменты реального роста в цифровой среде.
+            </p>
+          </div>
+        </div>
+
+        <div class="cyber-card p-8 sm:p-10 flex flex-col justify-between tilt-card">
+          <div>
+            <div class="inline-block px-3 py-1 rounded-lg bg-crimsonRed/10 text-crimsonRed font-mono text-xs mb-6 border border-crimsonRed/30">
+              [ CLASSIFIED // 02 ]
+            </div>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-4">Coming Soon...</h3>
+            <p class="text-gray-400 text-base sm:text-lg leading-relaxed italic">
+              New secure protocol in development. Stay tuned for the upcoming system drop. Access will be restricted.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 5 НАПРАВЛЕНИЙ ПО КАПСУЛАМ -->
-    <section id="capsules" class="mt-32 reveal-on-scroll">
+    <section id="capsules" class="mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
       <h2 class="font-display text-4xl sm:text-5xl font-black text-center mb-16 tracking-tight">
-        5 ЦИФРОВЫХ <span class="neon-violet-text">КАПСУЛ</span>
+        5 ЦИФРОВЫХ <span class="shining-violet-text">КАПСУЛ</span>
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- 1. Синяя (Дизайн) -->
         <div class="cyber-card p-8 flex flex-col justify-between tilt-card">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl mb-6">🔵</div>
-            <h3 class="font-display text-2xl font-bold text-white mb-3">Дизайн</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Современные интерфейсы, кибер-эстетика, UI/UX и визуальный стиль нового поколения.</p>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-3">Дизайн</h3>
+            <p class="text-gray-400 text-sm leading-relaxed italic">Современные интерфейсы, кибер-эстетика, UI/UX и визуальный стиль нового поколения.</p>
           </div>
         </div>
 
-        <!-- 2. Красная (Отношения) -->
         <div class="cyber-card p-8 flex flex-col justify-between tilt-card">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center text-xl mb-6">🔴</div>
-            <h3 class="font-display text-2xl font-bold text-white mb-3">Отношения</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Психология влияния, коммуникации, связи и цифровой социальный интеллект.</p>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-3">Отношения</h3>
+            <p class="text-gray-400 text-sm leading-relaxed italic">Психология влияния, коммуникации, связи и цифровой социальный интеллект.</p>
           </div>
         </div>
 
-        <!-- 3. Белая (Психология) -->
         <div class="cyber-card p-8 flex flex-col justify-between tilt-card">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center text-xl mb-6">⚪</div>
-            <h3 class="font-display text-2xl font-bold text-white mb-3">Психология</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Контроль разума, биохакинг продуктивности, ментальная устойчивость.</p>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-3">Психология</h3>
+            <p class="text-gray-400 text-sm leading-relaxed italic">Контроль разума, биохакинг продуктивности, ментальная устойчивость.</p>
           </div>
         </div>
 
-        <!-- 4. Оранжевая (Вайбкодинг) -->
         <div class="cyber-card p-8 flex flex-col justify-between md:col-span-1.5 tilt-card">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center text-xl mb-6">🟠</div>
-            <h3 class="font-display text-2xl font-bold text-white mb-3">Вайбкодинг</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Замена старому кодингу. Полное обучение с нуля, продвинутые промты, готовые скрипты и практика.</p>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-3">Вайбкодинг</h3>
+            <p class="text-gray-400 text-sm leading-relaxed italic">Замена старому кодингу. Полное обучение с нуля, продвинутые промты, готовые скрипты и практика.</p>
           </div>
         </div>
 
-        <!-- 5. Зеленая (Заработок) -->
         <div class="cyber-card p-8 flex flex-col justify-between md:col-span-1.5 tilt-card">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl mb-6">🟢</div>
-            <h3 class="font-display text-2xl font-bold text-white mb-3">Заработок</h3>
-            <p class="text-gray-400 text-sm leading-relaxed">Монетизация цифровых навыков, генерация трафика и построение стабильных денежных потоков.</p>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold shining-violet-text mb-3">Заработок</h3>
+            <p class="text-gray-400 text-sm leading-relaxed italic">Монетизация цифровых навыков, генерация трафика и построение стабильных денежных потоков.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- БЛОК "СИСТЕМНЫЕ ХАРАКТЕРИСТИКИ" (SYSTEM SPECS) -->
+    <section id="specs" class="mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
+      <div class="cyber-card p-8 sm:p-10 max-w-4xl mx-auto backdrop-blur-xl">
+        <div class="flex items-center justify-between mb-6 font-mono text-xs text-neonViolet uppercase tracking-widest">
+          <span>[ SYSTEM STATUS ]</span>
+          <span>ONLINE // SECURE</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono">
+          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-xs mb-1">ENCRYPTION</span>
+            <span class="text-white text-sm font-bold">AES-256</span>
+          </div>
+          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-xs mb-1">NODE</span>
+            <span class="text-white text-sm font-bold">KZ-07</span>
+          </div>
+          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-xs mb-1">PROTOCOL</span>
+            <span class="text-white text-sm font-bold">ACTIVE</span>
+          </div>
+          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-xs mb-1">VERSION</span>
+            <span class="text-white text-sm font-bold">v2.4.0</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- КОНТАКТЫ -->
-    <section id="contact" class="mt-32 reveal-on-scroll">
+    <section id="contact" class="mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
       <div class="cyber-card p-12 sm:p-16 text-center max-w-3xl mx-auto backdrop-blur-xl tilt-card">
-        <h2 class="font-display text-4xl font-black mb-4 text-white">ВХОД В СИСТЕМУ</h2>
-        <p class="text-gray-400 text-base mb-8">Готов принять таблетку и изменить правила игры? Пиши лично.</p>
+        <h2 class="font-display text-4xl font-black mb-4 shining-violet-text">ВХОД В СИСТЕМУ</h2>
+        <p class="text-gray-400 text-base mb-8 italic">Готов принять таблетку и изменить правила игры? Пиши лично.</p>
         <a href="https://t.me/beloysa" target="_blank" class="inline-flex px-10 py-4 rounded-2xl btn-cyber font-bold text-white text-base">
           Написать в Telegram (@beloysa)
         </a>
@@ -327,37 +452,39 @@
 
   </main>
 
-  <!-- СКРИПТЫ И АНИМАЦИИ -->
   <script>
     function skipIntro() {
       const intro = document.getElementById("intro-screen");
       if (intro) {
         intro.style.opacity = '0';
         intro.style.visibility = 'hidden';
-        setTimeout(() => intro.remove(), 500);
+        setTimeout(() => intro.remove(), 400);
       }
     }
 
-    // Дополнительная страховка на случай проблем с кликом
-    document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('skip-btn');
-      if (btn) {
-        btn.addEventListener('click', skipIntro);
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrollTop / docHeight;
+      const pill = document.getElementById('scrollPill');
+      if (pill) {
+        const moveRange = window.innerHeight * 0.6;
+        const translateY = (scrollPercent - 0.5) * moveRange;
+        const rotate = scrollPercent * 720;
+        pill.style.transform = `translateY(${translateY}px) rotate(${rotate}deg)`;
       }
     });
 
-    // Плавное появление блоков при скролле
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
     document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-    // Живой 3D-наклон плашек и spotlight за курсором
     document.querySelectorAll('.cyber-card').forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
@@ -369,8 +496,8 @@
 
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -6;
-        const rotateY = ((x - centerX) / centerX) * 6;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
 
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
       });
