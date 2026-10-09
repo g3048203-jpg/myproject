@@ -21,8 +21,8 @@
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            bgDark: '#050508',
-            cardBg: '#0b0b10',
+            bgDark: '#030305',
+            cardBg: '#09090e',
             neonViolet: '#bd00ff',
             crimsonRed: '#ff1a3c',
           }
@@ -33,55 +33,61 @@
 
   <style>
     body {
-      background-color: #050508;
+      background-color: #030305;
       color: #f3f4f6;
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Фоновая технологичная сетка */
-    .cyber-grid {
-      background-size: 40px 40px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    /* Богатый черно-красный живой фон вместо квадратиков */
+    .rich-bg {
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(255, 26, 60, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(189, 0, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(10, 10, 15, 1) 0%, #030305 100%);
+      background-attachment: fixed;
     }
 
-    /* Живое дыхание красного градиента на фоне */
-    @keyframes bgGlow {
-      0%, 100% { opacity: 0.15; transform: scale(1); }
-      50% { opacity: 0.25; transform: scale(1.08); }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.06); }
     }
     .bg-breath {
-      animation: bgGlow 8s ease-in-out infinite;
+      animation: pulseGlow 7s ease-in-out infinite;
     }
 
     /* Пурпурный неон */
-    .neon-violet-glow {
-      box-shadow: 0 0 25px -2px rgba(189, 0, 255, 0.5), 0 0 10px 0 rgba(189, 0, 255, 0.3);
-    }
     .neon-violet-text {
-      background: linear-gradient(135deg, #ffffff 20%, #d14eff 70%, #9d00ff 100%);
+      background: linear-gradient(135deg, #ffffff 20%, #d14eff 70%, #bd00ff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    /* Интро-экран */
+    /* Полноэкранный интро-слой */
     #intro-screen {
       position: fixed;
       inset: 0;
-      background: #050508;
-      z-index: 9999;
+      background: #030305;
+      z-index: 99999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease;
+    }
+
+    /* Эффект проявления букв из воздуха */
+    @keyframes fadeInAir {
+      0% { opacity: 0; transform: scale(0.94); filter: blur(12px); }
+      100% { opacity: 1; transform: scale(1); filter: blur(0px); }
+    }
+    .intro-title {
+      animation: fadeInAir 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     /* Объемные серебристо-серые плашки кибер-брутализма */
     .cyber-card {
-      background: linear-gradient(180deg, rgba(20, 20, 28, 0.85) 0%, rgba(10, 10, 15, 0.95) 100%);
+      background: linear-gradient(180deg, rgba(22, 22, 30, 0.85) 0%, rgba(10, 10, 15, 0.95) 100%);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       box-shadow: 
@@ -92,12 +98,12 @@
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .cyber-card:hover {
-      border-color: rgba(189, 0, 255, 0.45);
-      transform: translateY(-5px);
+      border-color: rgba(189, 0, 255, 0.4);
+      transform: translateY(-4px);
       box-shadow: 
         inset 0 1px 2px 0 rgba(255, 255, 255, 0.2),
         0 25px 50px -15px rgba(0, 0, 0, 0.9),
-        0 0 30px -5px rgba(189, 0, 255, 0.25);
+        0 0 30px -5px rgba(189, 0, 255, 0.2);
     }
 
     /* Spotlight-эффект за курсором */
@@ -105,7 +111,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(189, 0, 255, 0.1), transparent 60%);
+      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(189, 0, 255, 0.08), transparent 60%);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -129,42 +135,24 @@
     .btn-cyber:active {
       transform: scale(0.97);
     }
-
-    /* Плавающая таблетка-индикатор справа */
-    .floating-pill {
-      position: fixed;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 14px;
-      height: 48px;
-      background: linear-gradient(180deg, #bd00ff 0%, #ff1a3c 100%);
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(189, 0, 255, 0.6);
-      z-index: 30;
-      display: none;
-    }
-    @media(min-width: 1024px) {
-      .floating-pill { display: block; }
-    }
   </style>
 </head>
-<body class="cyber-grid antialiased font-sans">
+<body class="rich-bg antialiased font-sans">
 
-  <!-- ИНТРО С ЭФФЕКТОМ НАБОРА ТЕКСТА -->
+  <!-- ПОЛНОЭКРАННОЕ ИНТРО (ТОЛЬКО MLT PROJECT И КНОПКА ПРОПУСТИТЬ) -->
   <div id="intro-screen">
-    <div class="font-mono text-xl sm:text-3xl font-bold tracking-widest neon-violet-text mb-8" id="typing-text"></div>
-    <button onclick="skipIntro()" class="px-6 py-2.5 rounded-full border border-white/10 text-xs font-mono text-gray-400 hover:text-white hover:border-neonViolet transition">
-      [ ПРОПУСТИТЬ ИНТРО ]
-    </button>
+    <div class="text-center px-4">
+      <h1 class="font-display text-4xl sm:text-7xl font-black tracking-wider text-white intro-title mb-10">
+        MLT <span class="neon-violet-text">PROJECT</span>
+      </h1>
+      <button onclick="skipIntro()" class="px-8 py-3 rounded-full border border-white/15 bg-black/40 backdrop-blur-md text-xs font-mono uppercase tracking-widest text-gray-300 hover:text-white hover:border-neonViolet transition shadow-lg">
+        [ ПРОПУСТИТЬ ]
+      </button>
+    </div>
   </div>
 
-  <!-- ПЛАВАЮЩАЯ ТАБЛЕТКА СПРАВА -->
-  <div class="floating-pill" id="scroll-pill"></div>
-
-  <!-- ФОНОВЫЕ ПЕРЕЛИВЫ -->
-  <div class="fixed inset-0 cyber-grid pointer-events-none -z-10"></div>
-  <div class="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[80vw] max-w-[800px] h-[450px] bg-crimsonRed/20 rounded-full blur-[140px] pointer-events-none -z-10 bg-breath"></div>
+  <!-- ФОНОВЫЕ СВЕТОВЫЕ ПЕРЕЛИВЫ -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[90vw] max-w-[1000px] h-[500px] bg-crimsonRed/15 rounded-full blur-[160px] pointer-events-none -z-10 bg-breath"></div>
 
   <!-- ШАПКА -->
   <header class="sticky top-5 z-40 max-w-6xl mx-auto px-4">
@@ -182,20 +170,21 @@
   </header>
 
   <!-- ГЛАВНЫЙ КОНТЕНТ -->
-  <main class="max-w-6xl mx-auto px-4 pt-16 pb-28">
+  <main class="max-w-6xl mx-auto px-4 pt-12 pb-28">
 
-    <!-- HERO СЕКЦИЯ -->
+    <!-- HERO СЕКЦИЯ (ТЕКСТ СЛЕВА, ВИДЕО СПРАВА НИЖЕ) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[75vh]">
+      
+      <!-- Текст слева -->
       <div class="lg:col-span-7">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-neonViolet/10 border border-neonViolet/30 text-neonViolet mb-6">
           <span>⚡ Секретный протокол</span>
         </div>
-        <h1 class="font-display text-6xl sm:text-8xl font-black tracking-tight leading-[0.92] mb-6">
-          MLT<br/>
-          <span class="neon-violet-text">LABORATORY</span>
+        <h1 class="font-display text-5xl sm:text-7xl font-black tracking-tight leading-[0.95] mb-6">
+          MLT <span class="neon-violet-text">TEAM</span>
         </h1>
         <p class="text-gray-400 text-lg sm:text-xl font-normal leading-relaxed max-w-xl mb-9">
-          Закрытая цифровая экосистема. Выбирай свою капсулу реальности. Никакой воды — только чистый контент и практика.
+          Закрытая цифровая экосистема нового поколения. Выбирай свою капсулу реальности. Никакой воды — только чистый контент и жесткая практика.
         </p>
         <div class="flex gap-4">
           <a href="https://t.me/beloysa" target="_blank" class="px-8 py-4 rounded-2xl btn-cyber font-bold text-white text-base">
@@ -204,17 +193,28 @@
         </div>
       </div>
 
-      <!-- МЕСТО ПОД ВИДЕО С БАНКОЙ И ПЕРЧАТКОЙ -->
+      <!-- Блок с видео (бесконечные таблетки) справа -->
       <div class="lg:col-span-5 flex justify-center">
         <div class="w-full max-w-[420px] aspect-[4/5] cyber-card p-3 shadow-2xl flex items-center justify-center text-center relative">
-          <!-- Сюда в будущем встанет твое сгенерированное видео с перчаткой -->
-          <div class="text-gray-500 font-mono text-sm p-6 border border-dashed border-white/10 rounded-2xl w-full h-full flex flex-col items-center justify-center">
+          <!-- Сюда вставляй свое финальное видео с бесконечным высыпанием таблеток -->
+          <div class="text-gray-500 font-mono text-sm p-6 border border-dashed border-white/10 rounded-2xl w-full h-full flex flex-col items-center justify-center bg-black/40">
             <span class="text-neonViolet text-3xl mb-2">💊</span>
-            <span>Здесь будет видео с банкой и перчаткой</span>
+            <span>Видео с бесконечным высыпанием таблеток</span>
           </div>
         </div>
       </div>
+
     </div>
+
+    <!-- ПРОМЕЖУТОЧНЫЙ БЛОК (АКЦЕНТНЫЙ ТЕКСТ) -->
+    <section class="mt-24 text-center">
+      <div class="cyber-card p-10 sm:p-14 max-w-4xl mx-auto backdrop-blur-xl">
+        <p class="font-display text-2xl sm:text-3xl font-extrabold text-white leading-snug">
+          «Каждая таблетка — это готовый инструмент для полной трансформации твоих цифровых навыков и реальности.»
+        </p>
+        <span class="block mt-4 text-sm font-mono text-neonViolet uppercase tracking-widest">// SYSTEM PROTOCOL ACTIVE</span>
+      </div>
+    </section>
 
     <!-- 5 НАПРАВЛЕНИЙ ПО КАПСУЛАМ -->
     <section id="capsules" class="mt-32">
@@ -272,10 +272,10 @@
 
     <!-- КОНТАКТЫ -->
     <section id="contact" class="mt-32">
-      <div class="cyber-card p-12 sm:p-16 text-center max-w-3xl mx-auto">
+      <div class="cyber-card p-12 sm:p-16 text-center max-w-3xl mx-auto backdrop-blur-xl">
         <h2 class="font-display text-4xl font-black mb-4 text-white">ВХОД В СИСТЕМУ</h2>
         <p class="text-gray-400 text-base mb-8">Готов принять таблетку и изменить правила игры? Пиши лично.</p>
-        <a href="https://t.me/beloysa" target="_blank" class="inline-flex px-10 py-4 rounded-2xl btn-fire font-bold text-white text-base">
+        <a href="https://t.me/beloysa" target="_blank" class="inline-flex px-10 py-4 rounded-2xl btn-cyber font-bold text-white text-base">
           Написать в Telegram (@beloysa)
         </a>
       </div>
@@ -285,21 +285,7 @@
 
   <!-- СКРИПТЫ И АНИМАЦИИ -->
   <script>
-    // Эффект печатной машинки для интро
-    const textToType = "MLT PROJECT // LOADING SYSTEM...";
-    const typingElement = document.getElementById("typing-text");
-    let charIndex = 0;
-
-    function typeWriter() {
-      if (charIndex < textToType.length) {
-        typingElement.innerHTML += textToType.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeWriter, 70);
-      } else {
-        setTimeout(skipIntro, 1200); // Автоматически убираем интро через 1.2 сек после окончания текста
-      }
-    }
-
+    // Автоматическое скрытие интро через 3.5 секунды или по кнопке
     function skipIntro() {
       const intro = document.getElementById("intro-screen");
       intro.style.opacity = '0';
@@ -307,7 +293,7 @@
     }
 
     window.onload = () => {
-      setTimeout(typeWriter, 400);
+      setTimeout(skipIntro, 3200); // 3.2 секунды на любование надписью из воздуха
     };
 
     // Spotlight эффект слежки за курсором мыши на карточках
@@ -319,16 +305,6 @@
         card.style.setProperty('--mouse-x', `${x}px`);
         card.style.setProperty('--mouse-y', `${y}px`);
       });
-    });
-
-    // Динамическое перемещение правой таблетки при скролле
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = scrollTop / docHeight;
-      const pill = document.getElementById('scroll-pill');
-      const maxMove = window.innerHeight * 0.4;
-      pill.style.transform = `translateY(${ (scrollPercent - 0.5) * maxMove }px)`;
     });
   </script>
 </body>
