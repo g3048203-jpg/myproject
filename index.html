@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth" data-theme="pill">
+<html lang="ru" class="scroll-smooth" data-theme="void">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -27,6 +27,28 @@
 
   <style>
     :root {
+      --bg-main: #030305;
+      --accent-1: #ff1a3c;
+      --accent-2: #bd00ff;
+      --text-soft: #df8eff;
+      --card-bg-1: rgba(35, 35, 48, 0.85);
+      --card-bg-2: rgba(16, 16, 24, 0.95);
+      --border-color: rgba(255, 255, 255, 0.18);
+      --glow-color: rgba(189, 0, 255, 0.4);
+    }
+
+    [data-theme="void"] {
+      --bg-main: #010103;
+      --accent-1: #ffffff;
+      --accent-2: #555577;
+      --text-soft: #aaaaaa;
+      --card-bg-1: rgba(20, 20, 28, 0.85);
+      --card-bg-2: rgba(8, 8, 12, 0.95);
+      --border-color: rgba(255, 255, 255, 0.12);
+      --glow-color: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-theme="pill"] {
       --bg-main: #030305;
       --accent-1: #ff1a3c;
       --accent-2: #bd00ff;
@@ -79,6 +101,17 @@
       --card-bg-2: rgba(18, 4, 6, 0.95);
       --border-color: rgba(255, 0, 60, 0.25);
       --glow-color: rgba(255, 0, 60, 0.4);
+    }
+
+    [data-theme="acid"] {
+      --bg-main: #05020a;
+      --accent-1: #ff00ea;
+      --accent-2: #7b00ff;
+      --text-soft: #f08eff;
+      --card-bg-1: rgba(30, 12, 45, 0.85);
+      --card-bg-2: rgba(12, 4, 20, 0.95);
+      --border-color: rgba(255, 0, 234, 0.25);
+      --glow-color: rgba(255, 0, 234, 0.4);
     }
 
     body {
@@ -302,10 +335,12 @@
       backdrop-filter: blur(20px);
       border-radius: 16px;
       padding: 8px;
-      width: 170px;
+      width: 180px;
       display: none;
       box-shadow: 0 20px 40px rgba(0,0,0,0.9);
       z-index: 100;
+      max-height: 280px;
+      overflow-y: auto;
     }
     .theme-menu.active {
       display: block;
@@ -409,11 +444,13 @@
             <span>🎨 Темы</span>
           </button>
           <div id="themeMenu" class="theme-menu">
-            <button onclick="setTheme('pill'); playClick();" class="theme-option">// 01. The Pill</button>
-            <button onclick="setTheme('matrix'); playClick();" class="theme-option">// 02. Matrix</button>
-            <button onclick="setTheme('blue'); playClick();" class="theme-option">// 03. Cyber Blue</button>
-            <button onclick="setTheme('amber'); playClick();" class="theme-option">// 04. Amber</button>
-            <button onclick="setTheme('blood'); playClick();" class="theme-option">// 05. Blood</button>
+            <button onclick="setTheme('void'); playClick();" class="theme-option">// 01. Void Mono</button>
+            <button onclick="setTheme('pill'); playClick();" class="theme-option">// 02. The Pill</button>
+            <button onclick="setTheme('matrix'); playClick();" class="theme-option">// 03. Matrix</button>
+            <button onclick="setTheme('blue'); playClick();" class="theme-option">// 04. Cyber Blue</button>
+            <button onclick="setTheme('amber'); playClick();" class="theme-option">// 05. Amber</button>
+            <button onclick="setTheme('blood'); playClick();" class="theme-option">// 06. Blood</button>
+            <button onclick="setTheme('acid'); playClick();" class="theme-option">// 07. Acid Purple</button>
           </div>
         </div>
 
@@ -449,11 +486,13 @@
       <div class="mb-5 pb-5 border-b border-white/10">
         <span class="block font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-2.5">ВЫБОР ТЕМЫ:</span>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="setTheme('pill'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">01. Pill</button>
-          <button onclick="setTheme('matrix'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">02. Matrix</button>
-          <button onclick="setTheme('blue'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">03. Blue</button>
-          <button onclick="setTheme('amber'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">04. Amber</button>
-          <button onclick="setTheme('blood'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 col-span-2 text-gray-200">05. Blood</button>
+          <button onclick="setTheme('void'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">01. Void</button>
+          <button onclick="setTheme('pill'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">02. Pill</button>
+          <button onclick="setTheme('matrix'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">03. Matrix</button>
+          <button onclick="setTheme('blue'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">04. Blue</button>
+          <button onclick="setTheme('amber'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">05. Amber</button>
+          <button onclick="setTheme('blood'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">06. Blood</button>
+          <button onclick="setTheme('acid'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 col-span-2 text-gray-200">07. Acid Purple</button>
         </div>
       </div>
 
@@ -711,10 +750,9 @@
       closeThemeMenu();
     }
 
-    const savedTheme = localStorage.getItem('mlt_theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
+    // По умолчанию всегда Void Mono, если пользователь еще не сохранил другую тему в localStorage
+    const savedTheme = localStorage.getItem('mlt_theme') || 'void';
+    document.documentElement.setAttribute('data-theme', savedTheme);
 
     function toggleThemeMenu(event) {
       event.stopPropagation();
