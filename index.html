@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth" data-theme="void">
+<html lang="ru" class="scroll-smooth" data-theme="hostile">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -35,6 +35,17 @@
       --card-bg-2: rgba(16, 16, 24, 0.95);
       --border-color: rgba(255, 255, 255, 0.18);
       --glow-color: rgba(189, 0, 255, 0.4);
+    }
+
+    [data-theme="hostile"] {
+      --bg-main: #050102;
+      --accent-1: #ff0033;
+      --accent-2: #660011;
+      --text-soft: #ff6688;
+      --card-bg-1: rgba(26, 6, 10, 0.90);
+      --card-bg-2: rgba(10, 2, 4, 0.98);
+      --border-color: rgba(255, 0, 51, 0.35);
+      --glow-color: rgba(255, 0, 51, 0.45);
     }
 
     [data-theme="void"] {
@@ -92,28 +103,6 @@
       --glow-color: rgba(255, 183, 0, 0.4);
     }
 
-    [data-theme="blood"] {
-      --bg-main: #080202;
-      --accent-1: #ff003c;
-      --accent-2: #aa0022;
-      --text-soft: #ff5577;
-      --card-bg-1: rgba(40, 10, 15, 0.85);
-      --card-bg-2: rgba(18, 4, 6, 0.95);
-      --border-color: rgba(255, 0, 60, 0.25);
-      --glow-color: rgba(255, 0, 60, 0.4);
-    }
-
-    [data-theme="acid"] {
-      --bg-main: #05020a;
-      --accent-1: #ff00ea;
-      --accent-2: #7b00ff;
-      --text-soft: #f08eff;
-      --card-bg-1: rgba(30, 12, 45, 0.85);
-      --card-bg-2: rgba(12, 4, 20, 0.95);
-      --border-color: rgba(255, 0, 234, 0.25);
-      --glow-color: rgba(255, 0, 234, 0.4);
-    }
-
     body {
       background-color: var(--bg-main);
       color: #f3f4f6;
@@ -128,7 +117,7 @@
         radial-gradient(circle at 90% 80%, var(--accent-2) 0%, transparent 50%),
         radial-gradient(circle at 50% 50%, var(--bg-main) 0%, var(--bg-main) 100%);
       background-attachment: fixed;
-      opacity: 0.22;
+      opacity: 0.25;
       position: fixed;
       inset: 0;
       pointer-events: none;
@@ -195,6 +184,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 0 1rem;
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -256,7 +246,7 @@
       background: linear-gradient(135deg, var(--card-bg-1) 0%, var(--card-bg-2) 100%);
       border: 1px solid var(--border-color);
       border-radius: 24px;
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9);
       position: relative;
       will-change: transform;
       transition: border-color 0.4s ease, box-shadow 0.4s ease;
@@ -265,15 +255,15 @@
     .hero-glow-frame {
       box-shadow: 
         inset 0 1px 4px 0 rgba(255, 255, 255, 0.25),
-        0 25px 50px -15px rgba(0, 0, 0, 0.9),
-        0 0 35px -5px var(--glow-color);
-      border-color: var(--accent-2);
+        0 25px 50px -15px rgba(0, 0, 0, 0.95),
+        0 0 40px -5px var(--glow-color);
+      border-color: var(--accent-1);
     }
 
     @media (hover: hover) {
       .cyber-card:hover {
-        border-color: var(--accent-2);
-        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), 0 0 35px -5px var(--glow-color);
+        border-color: var(--accent-1);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.98), 0 0 40px -5px var(--glow-color);
       }
       .cyber-card::before {
         content: "";
@@ -291,9 +281,9 @@
     }
 
     .btn-cyber {
-      background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent-1) 100%);
+      background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
       border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 6px 20px var(--glow-color);
+      box-shadow: 0 6px 25px var(--glow-color);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
       display: inline-block;
       will-change: transform;
@@ -330,7 +320,7 @@
       position: absolute;
       right: 0;
       top: calc(100% + 10px);
-      background: rgba(10, 10, 18, 0.98);
+      background: rgba(10, 2, 4, 0.98);
       border: 1px solid var(--border-color);
       backdrop-filter: blur(20px);
       border-radius: 16px;
@@ -367,7 +357,7 @@
   <div class="rich-bg"></div>
 
   <!-- МОДАЛЬНОЕ ОКНО -->
-  <div id="lab-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
+  <div id="lab-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/90 backdrop-blur-md">
     <div id="lab-modal-content" class="cyber-card w-full max-w-xl p-5 sm:p-8 relative border shadow-2xl max-h-[90vh] overflow-y-auto">
       <button onclick="playClick(); closeModal();" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 cursor-pointer z-10">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -378,7 +368,7 @@
       <div class="flex items-center gap-3 mb-5">
         <div id="modal-icon" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 flex items-center justify-center text-xl sm:text-2xl">💊</div>
         <div>
-          <span id="modal-tag" class="font-mono text-[10px] sm:text-xs uppercase tracking-widest soft-accent-text">[ PROTOCOL // ACTIVE ]</span>
+          <span id="modal-tag" class="font-mono text-[10px] sm:text-xs uppercase tracking-widest soft-accent-text">[ PROTOCOL // HOSTILE ]</span>
           <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-white mt-0.5">Название капсулы</h3>
         </div>
       </div>
@@ -388,7 +378,7 @@
         <video id="modal-video" autoplay loop muted playsinline class="w-full h-full object-cover" onerror="handleVideoError()">
           <source src="" type="video/mp4" id="video-source">
         </video>
-        <div id="video-fallback" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 font-mono text-xs hidden bg-[#050508]">
+        <div id="video-fallback" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 font-mono text-xs hidden bg-[#050102]">
           <span class="text-2xl mb-2 soft-accent-text">💊</span>
           <span>[ Положите видео в папку сайта ]</span>
         </div>
@@ -399,7 +389,7 @@
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/10">
-        <span class="font-mono text-[10px] text-gray-500">// ENCRYPTED CHANNEL</span>
+        <span class="font-mono text-[10px] text-gray-500">// RESTRICTED ACCESS</span>
         <a id="modal-link" href="#" target="_blank" onclick="playClick()" class="w-full sm:w-auto px-6 py-3 rounded-xl btn-cyber magnetic text-white font-bold text-xs sm:text-sm text-center">
           Перейти в Telegram-канал ↗
         </a>
@@ -409,22 +399,24 @@
 
   <!-- ЦИФРОВЫЕ ШУМЫ -->
   <div class="cyber-matrix-bg">
-    <div class="matrix-column">010199 // MLT<br/>ENC_AES_256<br/>NODE_ACTIVE</div>
-    <div class="matrix-column">PILL_STATE: LIVE<br/>CRYPTO_HASH</div>
-    <div class="matrix-column hidden sm:block">SYSTEM_READY<br/>ACCESS_GRANTED</div>
+    <div class="matrix-column">010199 // HOSTILE<br/>ENC_AES_256<br/>NODE_LOCKED</div>
+    <div class="matrix-column">SYSTEM_WARN: RED<br/>CRYPTO_HASH</div>
+    <div class="matrix-column hidden sm:block">DANGER_ZONE<br/>ACCESS_DENIED</div>
     <div class="matrix-column hidden md:block">SECURE_LINK<br/>TCP_HANDSHAKE</div>
-    <div class="matrix-column hidden lg:block">PROTOCOL_LOCK</div>
+    <div class="matrix-column hidden lg:block">PROTOCOL_BLOOD</div>
   </div>
 
   <div class="scrolling-pill" id="scrollPill"></div>
 
   <!-- ИНТРО -->
   <div id="intro-screen">
-    <div class="text-center px-4">
-      <h1 id="intro-text" class="font-display text-4xl sm:text-7xl font-black tracking-wider mb-8"></h1>
-      <button onclick="playClick(); skipIntro();" class="magnetic px-7 py-3 rounded-full border border-white/20 bg-black/60 backdrop-blur-md text-[11px] font-mono uppercase tracking-widest text-gray-200 hover:text-white transition shadow-2xl cursor-pointer">
-        [ ПРОПУСТИТЬ ]
-      </button>
+    <div class="text-center px-4 max-w-full">
+      <h1 id="intro-text" class="font-display text-4xl sm:text-7xl font-black tracking-wider mb-8 leading-tight"></h1>
+      <div>
+        <button onclick="playClick(); skipIntro();" class="magnetic px-7 py-3 rounded-full border border-white/20 bg-black/60 backdrop-blur-md text-[11px] font-mono uppercase tracking-widest text-gray-200 hover:text-white transition shadow-2xl cursor-pointer">
+          [ ПРОПУСТИТЬ ]
+        </button>
+      </div>
     </div>
   </div>
 
@@ -444,12 +436,12 @@
             <span>🎨 Темы</span>
           </button>
           <div id="themeMenu" class="theme-menu">
-            <button onclick="setTheme('void'); playClick();" class="theme-option">// 01. Void Mono</button>
-            <button onclick="setTheme('pill'); playClick();" class="theme-option">// 02. The Pill</button>
-            <button onclick="setTheme('matrix'); playClick();" class="theme-option">// 03. Matrix</button>
-            <button onclick="setTheme('blue'); playClick();" class="theme-option">// 04. Cyber Blue</button>
-            <button onclick="setTheme('amber'); playClick();" class="theme-option">// 05. Amber</button>
-            <button onclick="setTheme('blood'); playClick();" class="theme-option">// 06. Blood</button>
+            <button onclick="setTheme('hostile'); playClick();" class="theme-option">// 01. Hostile</button>
+            <button onclick="setTheme('void'); playClick();" class="theme-option">// 02. Void Mono</button>
+            <button onclick="setTheme('pill'); playClick();" class="theme-option">// 03. The Pill</button>
+            <button onclick="setTheme('matrix'); playClick();" class="theme-option">// 04. Matrix</button>
+            <button onclick="setTheme('blue'); playClick();" class="theme-option">// 05. Cyber Blue</button>
+            <button onclick="setTheme('amber'); playClick();" class="theme-option">// 06. Amber</button>
             <button onclick="setTheme('acid'); playClick();" class="theme-option">// 07. Acid Purple</button>
           </div>
         </div>
@@ -472,7 +464,7 @@
   </header>
 
   <!-- МОБИЛЬНОЕ МЕНЮ -->
-  <div id="mobile-menu" class="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-[#07070a]/98 backdrop-blur-2xl z-50 p-6 flex flex-col justify-between border-l border-white/10 shadow-2xl md:hidden">
+  <div id="mobile-menu" class="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-[#0a0204]/98 backdrop-blur-2xl z-50 p-6 flex flex-col justify-between border-l border-white/10 shadow-2xl md:hidden">
     <div>
       <div class="flex items-center justify-between mb-6">
         <span class="font-display font-black text-lg text-white">MLT // MENU</span>
@@ -486,12 +478,12 @@
       <div class="mb-5 pb-5 border-b border-white/10">
         <span class="block font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-2.5">ВЫБОР ТЕМЫ:</span>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="setTheme('void'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">01. Void</button>
-          <button onclick="setTheme('pill'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">02. Pill</button>
-          <button onclick="setTheme('matrix'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">03. Matrix</button>
-          <button onclick="setTheme('blue'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">04. Blue</button>
-          <button onclick="setTheme('amber'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">05. Amber</button>
-          <button onclick="setTheme('blood'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">06. Blood</button>
+          <button onclick="setTheme('hostile'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">01. Hostile</button>
+          <button onclick="setTheme('void'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">02. Void</button>
+          <button onclick="setTheme('pill'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">03. Pill</button>
+          <button onclick="setTheme('matrix'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">04. Matrix</button>
+          <button onclick="setTheme('blue'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">05. Blue</button>
+          <button onclick="setTheme('amber'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">06. Amber</button>
           <button onclick="setTheme('acid'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 col-span-2 text-gray-200">07. Acid Purple</button>
         </div>
       </div>
@@ -547,7 +539,7 @@
         <p class="font-display text-lg sm:text-2xl font-extrabold text-white leading-snug">
           «Каждая таблетка — это готовый инструмент для полной трансформации твоих цифровых навыков и реальности.»
         </p>
-        <span class="block mt-3 text-[11px] sm:text-xs font-mono soft-accent-text uppercase tracking-widest">// THE PILL PROTOCOL ACTIVE</span>
+        <span class="block mt-3 text-[11px] sm:text-xs font-mono soft-accent-text uppercase tracking-widest">// HOSTILE PROTOCOL ACTIVE</span>
       </div>
     </section>
 
@@ -646,12 +638,12 @@
           </div>
         </div>
 
-        <!-- Психология -->
-        <div onclick="playClick(); openModal('Психология', 'Контроль разума, биохакинг продуктивности, ментальная устойчивость.', 'https://t.me/MLT_Psychology', '⚪', 'PSYCHOLOGY // 03', 'psychology.mp4')" class="cyber-card p-6 sm:p-8 flex flex-col justify-between cursor-pointer group">
+        <!-- Психология и Медицина -->
+        <div onclick="playClick(); openModal('Психология & Медицина', 'Контроль разума, биохакинг продуктивности, ментальная устойчивость, а также продвинутая биомедицина и биохакинг тела.', 'https://t.me/MLT_Psychology', '⚪', 'PSYCHOLOGY // 03', 'psychology.mp4')" class="cyber-card p-6 sm:p-8 flex flex-col justify-between cursor-pointer group">
           <div>
             <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center text-lg mb-4">⚪</div>
             <h3 class="font-display text-xl sm:text-2xl font-bold soft-accent-text mb-2">Психология ↗</h3>
-            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Контроль разума, биохакинг продуктивности, ментальная устойчивость.</p>
+            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Контроль разума, биохакинг продуктивности, ментальная устойчивость, а также биомедицина и здоровье тела.</p>
           </div>
         </div>
 
@@ -680,7 +672,7 @@
       <div class="cyber-card p-6 sm:p-10 max-w-4xl mx-auto backdrop-blur-xl">
         <div class="flex items-center justify-between mb-5 font-mono text-[11px] soft-accent-text uppercase tracking-widest">
           <span>[ SYSTEM STATUS ]</span>
-          <span>ONLINE // SECURE</span>
+          <span>ONLINE // RESTRICTED</span>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center font-mono">
           <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
@@ -693,11 +685,11 @@
           </div>
           <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
             <span class="block text-gray-500 text-[10px] mb-1">PROTOCOL</span>
-            <span class="text-white text-xs sm:text-sm font-bold">ACTIVE</span>
+            <span class="text-white text-xs sm:text-sm font-bold">HOSTILE</span>
           </div>
           <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
             <span class="block text-gray-500 text-[10px] mb-1">VERSION</span>
-            <span class="text-white text-xs sm:text-sm font-bold">v2.4.0</span>
+            <span class="text-white text-xs sm:text-sm font-bold">v2.5.0</span>
           </div>
         </div>
       </div>
@@ -750,8 +742,7 @@
       closeThemeMenu();
     }
 
-    // По умолчанию всегда Void Mono, если пользователь еще не сохранил другую тему в localStorage
-    const savedTheme = localStorage.getItem('mlt_theme') || 'void';
+    const savedTheme = localStorage.getItem('mlt_theme') || 'hostile';
     document.documentElement.setAttribute('data-theme', savedTheme);
 
     function toggleThemeMenu(event) {
@@ -772,13 +763,17 @@
     });
 
     const introTextEl = document.getElementById('intro-text');
-    const textString = "MLT PROJECT";
+    const textString = "MLT\nPROJECT";
     textString.split('').forEach((char, index) => {
       const span = document.createElement('span');
       span.className = 'intro-char';
-      span.style.animationDelay = `${index * 0.1}s`;
-      span.textContent = char === ' ' ? '\u00A0' : char;
-      introTextEl.appendChild(span);
+      span.style.animationDelay = `${index * 0.08}s`;
+      if (char === '\n') {
+        introTextEl.appendChild(document.createElement('br'));
+      } else {
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        introTextEl.appendChild(span);
+      }
     });
 
     function skipIntro() {
@@ -795,7 +790,7 @@
       document.getElementById('modal-desc').textContent = desc;
       document.getElementById('modal-link').href = link;
       document.getElementById('modal-icon').textContent = icon;
-      document.getElementById('modal-tag').textContent = `[ ${tag || 'PROTOCOL // ACTIVE'} ]`;
+      document.getElementById('modal-tag').textContent = `[ ${tag || 'PROTOCOL // HOSTILE'} ]`;
       
       const videoEl = document.getElementById('modal-video');
       const fallbackEl = document.getElementById('video-fallback');
@@ -836,7 +831,6 @@
       if (menu) menu.classList.toggle('open');
     }
 
-    // Магнитный эффект для кнопок на ПК
     document.querySelectorAll('.magnetic').forEach(btn => {
       btn.addEventListener('mousemove', e => {
         const rect = btn.getBoundingClientRect();
