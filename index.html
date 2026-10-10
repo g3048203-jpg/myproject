@@ -102,12 +102,20 @@
       z-index: -10;
     }
 
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 0.75; transform: scale(1.06); }
+    .cyber-glitch {
+      position: relative;
+      display: inline-block;
     }
-    .bg-breath {
-      animation: pulseGlow 9s ease-in-out infinite;
+    .cyber-glitch:hover {
+      animation: glitchAnim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    }
+    @keyframes glitchAnim {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); filter: drop-shadow(2px -2px var(--accent-1)); }
+      40% { transform: translate(-2px, -2px); filter: drop-shadow(-2px 2px var(--accent-2)); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
     }
 
     .cyber-matrix-bg {
@@ -116,9 +124,9 @@
       pointer-events: none;
       z-index: -5;
       overflow: hidden;
-      opacity: 0.12;
+      opacity: 0.08;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-soft);
       line-height: 1.5;
       display: flex;
@@ -142,7 +150,7 @@
 
     .soft-accent-text {
       color: var(--text-soft);
-      text-shadow: 0 0 30px var(--glow-color);
+      text-shadow: 0 0 25px var(--glow-color);
     }
 
     #intro-screen {
@@ -186,7 +194,7 @@
       visibility: visible;
     }
     #lab-modal-content {
-      transform: scale(0.9) translateY(20px);
+      transform: scale(0.92) translateY(20px);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #lab-modal.open #lab-modal-content {
@@ -195,72 +203,78 @@
 
     .scrolling-pill {
       position: fixed;
-      right: 16px;
+      right: 12px;
       top: 50%;
-      width: 14px;
-      height: 44px;
+      width: 12px;
+      height: 40px;
       background: linear-gradient(180deg, var(--text-soft) 0%, var(--accent-2) 100%);
       border-radius: 20px;
-      box-shadow: 0 0 25px var(--glow-color), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 20px var(--glow-color);
       z-index: 50;
       pointer-events: none;
-      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.1s linear;
       display: none;
     }
     @media(min-width: 1024px) {
-      .scrolling-pill { display: block; right: 24px; width: 16px; height: 52px; }
+      .scrolling-pill { display: block; right: 20px; width: 16px; height: 52px; }
     }
 
     .cyber-card {
       background: linear-gradient(135deg, var(--card-bg-1) 0%, var(--card-bg-2) 100%);
       border: 1px solid var(--border-color);
-      border-radius: 28px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+      position: relative;
+      will-change: transform;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .hero-glow-frame {
       box-shadow: 
         inset 0 1px 4px 0 rgba(255, 255, 255, 0.25),
-        0 25px 50px -15px rgba(0, 0, 0, 0.9);
-      position: relative;
-      transform-style: preserve-3d;
-      transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .cyber-card:hover {
+        0 25px 50px -15px rgba(0, 0, 0, 0.9),
+        0 0 35px -5px var(--glow-color);
       border-color: var(--accent-2);
-      box-shadow: 
-        inset 0 1px 6px 0 rgba(255, 255, 255, 0.4),
-        0 35px 70px -15px rgba(0, 0, 0, 0.95),
-        0 0 45px -5px var(--glow-color);
     }
 
-    .cyber-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-color), transparent 60%);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      border-radius: inherit;
-    }
-    .cyber-card:hover::before {
-      opacity: 1;
+    @media (hover: hover) {
+      .cyber-card:hover {
+        border-color: var(--accent-2);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), 0 0 35px -5px var(--glow-color);
+      }
+      .cyber-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-color), transparent 60%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: inherit;
+      }
+      .cyber-card:hover::before {
+        opacity: 1;
+      }
     }
 
     .btn-cyber {
       background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent-1) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.5), 0 8px 25px var(--glow-color);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 20px var(--glow-color);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
       display: inline-block;
+      will-change: transform;
     }
-    .btn-cyber:hover {
-      box-shadow: inset 0 1px 3px 0 rgba(255, 255, 255, 0.7), 0 14px 40px var(--glow-color);
+    .btn-cyber:active {
+      transform: scale(0.96);
     }
 
     .reveal-on-scroll {
       opacity: 0;
-      transform: translateY(70px) scale(0.94);
-      filter: blur(12px);
-      transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(50px) scale(0.96);
+      filter: blur(8px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1), filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform, filter;
     }
     .reveal-on-scroll.active {
       opacity: 1;
@@ -276,7 +290,6 @@
       transform: translateX(0);
     }
 
-    /* Исправленное выпадающее меню тем */
     .theme-dropdown {
       position: relative;
     }
@@ -289,7 +302,7 @@
       backdrop-filter: blur(20px);
       border-radius: 16px;
       padding: 8px;
-      width: 180px;
+      width: 170px;
       display: none;
       box-shadow: 0 20px 40px rgba(0,0,0,0.9);
       z-index: 100;
@@ -314,35 +327,46 @@
     }
   </style>
 </head>
-<body class="antialiased font-sans">
+<body class="antialiased font-sans text-sm sm:text-base">
 
   <div class="rich-bg"></div>
 
-  <!-- МОДАЛЬНОЕ ОКНО ЛАБОРАТОРИИ -->
-  <div id="lab-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-    <div id="lab-modal-content" class="cyber-card w-full max-w-lg p-6 sm:p-8 relative border shadow-2xl">
-      <button onclick="playClick(); closeModal();" class="absolute top-5 right-5 text-gray-400 hover:text-white p-2 cursor-pointer">
+  <!-- МОДАЛЬНОЕ ОКНО -->
+  <div id="lab-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
+    <div id="lab-modal-content" class="cyber-card w-full max-w-xl p-5 sm:p-8 relative border shadow-2xl max-h-[90vh] overflow-y-auto">
+      <button onclick="playClick(); closeModal();" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 cursor-pointer z-10">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
       
-      <div class="flex items-center gap-3 mb-6">
-        <div id="modal-icon" class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-2xl">💊</div>
+      <div class="flex items-center gap-3 mb-5">
+        <div id="modal-icon" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 flex items-center justify-center text-xl sm:text-2xl">💊</div>
         <div>
-          <span id="modal-tag" class="font-mono text-xs uppercase tracking-widest soft-accent-text">[ PROTOCOL // ACTIVE ]</span>
-          <h3 id="modal-title" class="font-display text-2xl font-bold text-white mt-0.5">Название капсулы</h3>
+          <span id="modal-tag" class="font-mono text-[10px] sm:text-xs uppercase tracking-widest soft-accent-text">[ PROTOCOL // ACTIVE ]</span>
+          <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-white mt-0.5">Название капсулы</h3>
         </div>
       </div>
 
-      <p id="modal-desc" class="text-gray-300 text-sm sm:text-base leading-relaxed mb-8">
+      <!-- ВИДЕО-БЛОК -->
+      <div class="w-full aspect-video rounded-2xl overflow-hidden mb-5 border border-white/10 bg-black/80 relative flex items-center justify-center">
+        <video id="modal-video" autoplay loop muted playsinline class="w-full h-full object-cover" onerror="handleVideoError()">
+          <source src="" type="video/mp4" id="video-source">
+        </video>
+        <div id="video-fallback" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 font-mono text-xs hidden bg-[#050508]">
+          <span class="text-2xl mb-2 soft-accent-text">💊</span>
+          <span>[ Положите видео в папку сайта ]</span>
+        </div>
+      </div>
+
+      <p id="modal-desc" class="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6 italic">
         Описание выбранного протокола лаборатории...
       </p>
 
-      <div class="flex items-center justify-between pt-4 border-t border-white/10">
-        <span class="font-mono text-xs text-gray-500">ENCRYPTED CHANNEL</span>
-        <a id="modal-link" href="#" target="_blank" onclick="playClick()" class="px-6 py-3 rounded-xl btn-cyber text-white font-bold text-sm">
-          Открыть доступ ↗
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/10">
+        <span class="font-mono text-[10px] text-gray-500">// ENCRYPTED CHANNEL</span>
+        <a id="modal-link" href="#" target="_blank" onclick="playClick()" class="w-full sm:w-auto px-6 py-3 rounded-xl btn-cyber magnetic text-white font-bold text-xs sm:text-sm text-center">
+          Перейти в Telegram-канал ↗
         </a>
       </div>
     </div>
@@ -350,38 +374,36 @@
 
   <!-- ЦИФРОВЫЕ ШУМЫ -->
   <div class="cyber-matrix-bg">
-    <div class="matrix-column">010199 // MLT<br/>ENC_AES_256<br/>NODE_ACTIVE<br/>SYNTAX_OK</div>
-    <div class="matrix-column">PILL_STATE: LIVE<br/>CRYPTO_HASH<br/>SECURITY_L1</div>
-    <div class="matrix-column hidden sm:block">SYSTEM_READY<br/>ACCESS_GRANTED<br/>NEON_PULSE</div>
-    <div class="matrix-column hidden md:block">SECURE_LINK<br/>TCP_HANDSHAKE<br/>0x0041A9</div>
-    <div class="matrix-column hidden lg:block">PROTOCOL_LOCK<br/>KEY_EXCHANGE</div>
+    <div class="matrix-column">010199 // MLT<br/>ENC_AES_256<br/>NODE_ACTIVE</div>
+    <div class="matrix-column">PILL_STATE: LIVE<br/>CRYPTO_HASH</div>
+    <div class="matrix-column hidden sm:block">SYSTEM_READY<br/>ACCESS_GRANTED</div>
+    <div class="matrix-column hidden md:block">SECURE_LINK<br/>TCP_HANDSHAKE</div>
+    <div class="matrix-column hidden lg:block">PROTOCOL_LOCK</div>
   </div>
 
-  <!-- КАТЯЩАЯСЯ ТАБЛЕТКА -->
   <div class="scrolling-pill" id="scrollPill"></div>
 
   <!-- ИНТРО -->
   <div id="intro-screen">
     <div class="text-center px-4">
-      <h1 id="intro-text" class="font-display text-4xl sm:text-7xl font-black tracking-wider mb-8 sm:mb-10"></h1>
-      <button onclick="playClick(); skipIntro();" class="magnetic px-8 py-3.5 rounded-full border border-white/20 bg-black/60 backdrop-blur-md text-xs font-mono uppercase tracking-widest text-gray-200 hover:text-white transition shadow-2xl cursor-pointer">
+      <h1 id="intro-text" class="font-display text-4xl sm:text-7xl font-black tracking-wider mb-8"></h1>
+      <button onclick="playClick(); skipIntro();" class="magnetic px-7 py-3 rounded-full border border-white/20 bg-black/60 backdrop-blur-md text-[11px] font-mono uppercase tracking-widest text-gray-200 hover:text-white transition shadow-2xl cursor-pointer">
         [ ПРОПУСТИТЬ ]
       </button>
     </div>
   </div>
 
   <!-- ШАПКА -->
-  <header class="sticky top-3 sm:top-5 z-40 max-w-6xl mx-auto px-3 sm:px-4 reveal-on-scroll" style="transition-delay: 0.1s;">
-    <div class="cyber-card px-4 sm:px-6 py-3 flex items-center justify-between backdrop-blur-xl" style="overflow: visible !important;">
-      <a href="#" onclick="playClick()" class="font-display font-black text-xl sm:text-2xl tracking-tight text-white">MLT</a>
+  <header class="sticky top-2 sm:top-4 z-40 max-w-6xl mx-auto px-3 sm:px-4 reveal-on-scroll">
+    <div class="cyber-card px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between backdrop-blur-xl" style="overflow: visible !important;">
+      <a href="#" onclick="playClick()" class="font-display font-black text-xl tracking-tight text-white cyber-glitch">MLT</a>
       
-      <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-semibold">
+      <nav class="hidden md:flex items-center space-x-1 text-sm font-semibold">
         <a href="#about" onclick="playClick()" class="px-3 py-2 rounded-full text-gray-300 hover:text-white transition">Лаборатория</a>
         <a href="#projects" onclick="playClick()" class="px-3 py-2 rounded-full text-gray-300 hover:text-white transition">Проекты</a>
         <a href="#capsules" onclick="playClick()" class="px-3 py-2 rounded-full text-gray-300 hover:text-white transition">Капсулы</a>
         <a href="#specs" onclick="playClick()" class="px-3 py-2 rounded-full text-gray-300 hover:text-white transition">Система</a>
         
-        <!-- ПАНЕЛЬ ПЕРЕКЛЮЧЕНИЯ ТЕМ -->
         <div class="theme-dropdown">
           <button onclick="playClick(); toggleThemeMenu(event);" class="px-3.5 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-mono uppercase tracking-wider text-gray-300 hover:text-white flex items-center gap-1.5 transition cursor-pointer">
             <span>🎨 Темы</span>
@@ -413,10 +435,10 @@
   </header>
 
   <!-- МОБИЛЬНОЕ МЕНЮ -->
-  <div id="mobile-menu" class="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-[#07070a]/95 backdrop-blur-2xl z-50 p-6 flex flex-col justify-between border-l border-white/10 shadow-2xl md:hidden">
+  <div id="mobile-menu" class="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-[#07070a]/98 backdrop-blur-2xl z-50 p-6 flex flex-col justify-between border-l border-white/10 shadow-2xl md:hidden">
     <div>
-      <div class="flex items-center justify-between mb-8">
-        <span class="font-display font-black text-xl text-white">MLT // MENU</span>
+      <div class="flex items-center justify-between mb-6">
+        <span class="font-display font-black text-lg text-white">MLT // MENU</span>
         <button onclick="playClick(); toggleMobileMenu();" class="p-2 rounded-full bg-white/10 text-white cursor-pointer">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -424,18 +446,18 @@
         </button>
       </div>
 
-      <div class="mb-6 pb-6 border-b border-white/10">
-        <span class="block font-mono text-xs text-gray-400 uppercase tracking-widest mb-3">ВЫБОР ПРОТОКОЛА ТЕМЫ:</span>
+      <div class="mb-5 pb-5 border-b border-white/10">
+        <span class="block font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-2.5">ВЫБОР ТЕМЫ:</span>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="setTheme('pill'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200 cursor-pointer">01. Pill</button>
-          <button onclick="setTheme('matrix'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200 cursor-pointer">02. Matrix</button>
-          <button onclick="setTheme('blue'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200 cursor-pointer">03. Blue</button>
-          <button onclick="setTheme('amber'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200 cursor-pointer">04. Amber</button>
-          <button onclick="setTheme('blood'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 col-span-2 text-gray-200 cursor-pointer">05. Blood Protocol</button>
+          <button onclick="setTheme('pill'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">01. Pill</button>
+          <button onclick="setTheme('matrix'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">02. Matrix</button>
+          <button onclick="setTheme('blue'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">03. Blue</button>
+          <button onclick="setTheme('amber'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 text-gray-200">04. Amber</button>
+          <button onclick="setTheme('blood'); playClick(); toggleMobileMenu();" class="p-2 text-xs font-mono rounded-lg bg-white/5 border border-white/10 col-span-2 text-gray-200">05. Blood</button>
         </div>
       </div>
 
-      <nav class="flex flex-col space-y-4 font-display text-lg font-bold">
+      <nav class="flex flex-col space-y-3 font-display text-base font-bold">
         <a href="#about" onclick="playClick(); toggleMobileMenu();" class="text-gray-300 hover:text-white transition">Лаборатория</a>
         <a href="#projects" onclick="playClick(); toggleMobileMenu();" class="text-gray-300 hover:text-white transition">Проекты</a>
         <a href="#capsules" onclick="playClick(); toggleMobileMenu();" class="text-gray-300 hover:text-white transition">Капсулы</a>
@@ -443,83 +465,83 @@
         <a href="#contact" onclick="playClick(); toggleMobileMenu();" class="text-gray-300 hover:text-white transition">Связь</a>
       </nav>
     </div>
-    <div class="pt-6 border-t border-white/10">
-      <a href="https://t.me/beloysa" target="_blank" onclick="playClick()" class="block w-full py-3 rounded-2xl btn-cyber text-white font-bold text-center">
+    <div class="pt-5 border-t border-white/10">
+      <a href="https://t.me/beloysa" target="_blank" onclick="playClick()" class="block w-full py-3 rounded-xl btn-cyber text-white font-bold text-center text-sm">
         Написать в Telegram
       </a>
     </div>
   </div>
 
   <!-- КОНТЕНТ -->
-  <main class="max-w-6xl mx-auto px-4 pt-8 sm:pt-12 pb-28">
+  <main class="max-w-6xl mx-auto px-4 pt-6 sm:pt-12 pb-24">
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[70vh] reveal-on-scroll" style="transition-delay: 0.2s;">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[65vh] reveal-on-scroll">
       <div class="lg:col-span-7">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 soft-accent-text mb-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white/5 border border-white/10 soft-accent-text mb-5">
           <span>⚡ Секретный протокол</span>
         </div>
-        <h1 class="font-display text-4xl sm:text-7xl font-black tracking-tight leading-[0.95] mb-6">
-          MLT <span class="soft-accent-text">TEAM</span>
+        <h1 class="font-display text-3xl sm:text-6xl font-black tracking-tight leading-[0.95] mb-5">
+          MLT <span class="soft-accent-text cyber-glitch">TEAM</span>
         </h1>
-        <p class="text-gray-400 text-base sm:text-xl font-normal leading-relaxed max-w-xl mb-8 sm:mb-9">
+        <p class="text-gray-400 text-sm sm:text-lg font-normal leading-relaxed max-w-xl mb-7">
           Закрытая цифровая экосистема нового поколения. Выбирай свою капсулу реальности. Никакой воды — только чистый контент и жесткая практика.
         </p>
-        <div class="flex gap-4">
-          <a href="https://t.me/beloysa" target="_blank" onclick="playClick()" class="px-7 sm:px-8 py-3.5 sm:py-4 rounded-2xl btn-cyber magnetic font-bold text-white text-sm sm:text-base">
+        <div>
+          <a href="https://t.me/beloysa" target="_blank" onclick="playClick()" class="px-7 py-3.5 rounded-2xl btn-cyber magnetic font-bold text-white text-sm">
             Активировать доступ
           </a>
         </div>
       </div>
 
+      <!-- ГЛАВНЫЙ ВИДЕО-БЛОК С НЕОНОВЫМ СВЕЧЕНИЕМ И ЦЕНТРОВКОЙ -->
       <div class="lg:col-span-5 flex justify-center">
-        <div class="w-full max-w-[420px] aspect-[4/5] cyber-card p-3 shadow-2xl flex items-center justify-center text-center relative">
-          <div class="text-gray-400 font-mono text-xs sm:text-sm p-6 border border-dashed border-white/15 rounded-2xl w-full h-full flex flex-col items-center justify-center bg-black/40">
-            <span class="text-3xl mb-2 soft-accent-text">💊</span>
-            <span>Видео с бесконечным высыпанием таблеток</span>
-          </div>
+        <div class="w-full max-w-[360px] sm:max-w-[420px] aspect-[4/5] cyber-card hero-glow-frame p-3 shadow-2xl flex items-center justify-center text-center relative overflow-hidden">
+          <video autoplay loop muted playsinline class="w-full h-full object-cover rounded-2xl">
+            <source src="hero.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
 
-    <section class="mt-20 sm:mt-24 text-center reveal-on-scroll" style="transition-delay: 0.1s;">
-      <div class="cyber-card p-8 sm:p-14 max-w-4xl mx-auto backdrop-blur-xl">
-        <p class="font-display text-xl sm:text-3xl font-extrabold text-white leading-snug">
+    <section class="mt-16 sm:mt-24 text-center reveal-on-scroll">
+      <div class="cyber-card p-6 sm:p-12 max-w-4xl mx-auto backdrop-blur-xl">
+        <p class="font-display text-lg sm:text-2xl font-extrabold text-white leading-snug">
           «Каждая таблетка — это готовый инструмент для полной трансформации твоих цифровых навыков и реальности.»
         </p>
-        <span class="block mt-4 text-xs sm:text-sm font-mono soft-accent-text uppercase tracking-widest">// THE PILL PROTOCOL ACTIVE</span>
+        <span class="block mt-3 text-[11px] sm:text-xs font-mono soft-accent-text uppercase tracking-widest">// THE PILL PROTOCOL ACTIVE</span>
       </div>
     </section>
 
     <!-- О НАС -->
-    <section id="about" class="mt-24 sm:mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
-      <h2 class="font-display text-3xl sm:text-5xl font-black text-center mb-12 sm:mb-16 tracking-tight soft-accent-text">
+    <section id="about" class="mt-20 sm:mt-32 reveal-on-scroll">
+      <h2 class="font-display text-2xl sm:text-5xl font-black text-center mb-10 sm:mb-16 tracking-tight soft-accent-text cyber-glitch">
         О НАС
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-        <div class="cyber-card p-7 sm:p-10 flex flex-col justify-between tilt-card">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
+        <div class="cyber-card p-6 sm:p-10 flex flex-col justify-between">
           <div>
-            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-6 border border-white/10">
+            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-4 border border-white/10">
               [ 01 // IDENTITY ]
             </div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-4">Кто мы</h3>
-            <p class="text-gray-400 text-sm sm:text-lg leading-relaxed italic">
+            <h3 class="font-display text-xl sm:text-3xl font-bold soft-accent-text mb-3">Кто мы</h3>
+            <p class="text-gray-400 text-xs sm:text-base leading-relaxed italic">
               Мы команда MLT. Развиваемся в сфере психологии, криптовалюты, заработка и вайбкодинга. Создаем собственную экосистему из пяти «таблеток», объединяем единомышленников и делимся практическим опытом.
             </p>
           </div>
         </div>
 
-        <div class="cyber-card p-7 sm:p-10 flex flex-col justify-between tilt-card">
+        <div class="cyber-card p-6 sm:p-10 flex flex-col justify-between">
           <div>
-            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-6 border border-white/10">
+            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-4 border border-white/10">
               [ 02 // THE PILL PROTOCOL ]
             </div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-6">
-              <span class="block mb-1">MLT Community</span>
-              <span class="block mb-1">Psychology</span>
+            <h3 class="font-display text-xl sm:text-3xl font-bold soft-accent-text mb-4">
+              <span class="block mb-0.5">MLT Community</span>
+              <span class="block mb-0.5">Psychology</span>
               <span class="block">Crypto</span>
             </h3>
-            <p class="text-gray-400 text-sm sm:text-lg leading-relaxed italic">
+            <p class="text-gray-400 text-xs sm:text-base leading-relaxed italic">
               Флагманский проект «The Pill Protocol» объединяет закрытое комьюнити, передовые психологические практики и криптовалютные стратегии нового уровня.
             </p>
           </div>
@@ -528,31 +550,31 @@
     </section>
 
     <!-- ПРОЕКТЫ -->
-    <section id="projects" class="mt-24 sm:mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
-      <h2 class="font-display text-3xl sm:text-5xl font-black text-center mb-12 sm:mb-16 tracking-tight soft-accent-text">
+    <section id="projects" class="mt-20 sm:mt-32 reveal-on-scroll">
+      <h2 class="font-display text-2xl sm:text-5xl font-black text-center mb-10 sm:mb-16 tracking-tight soft-accent-text cyber-glitch">
         Проекты MLT
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-        <div class="cyber-card p-7 sm:p-10 flex flex-col justify-between tilt-card">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
+        <div class="cyber-card p-6 sm:p-10 flex flex-col justify-between">
           <div>
-            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-6 border border-white/10">
+            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-4 border border-white/10">
               [ PROTOCOL // 01 ]
             </div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-4">The Pill Protocol</h3>
-            <p class="text-gray-400 text-sm sm:text-lg leading-relaxed italic">
+            <h3 class="font-display text-xl sm:text-3xl font-bold soft-accent-text mb-3">The Pill Protocol</h3>
+            <p class="text-gray-400 text-xs sm:text-base leading-relaxed italic">
               Практическая лаборатория навыков. Закрытые гайды, алгоритмы вайбкодинга, генерация контента нового поколения и инструменты реального роста в цифровой среде.
             </p>
           </div>
         </div>
 
-        <div class="cyber-card p-7 sm:p-10 flex flex-col justify-between tilt-card">
+        <div class="cyber-card p-6 sm:p-10 flex flex-col justify-between">
           <div>
-            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-6 border border-white/10">
+            <div class="inline-block px-3 py-1 rounded-lg bg-white/5 text-gray-300 font-mono text-xs mb-4 border border-white/10">
               [ CLASSIFIED // 02 ]
             </div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-4">Coming Soon...</h3>
-            <p class="text-gray-400 text-sm sm:text-lg leading-relaxed italic">
+            <h3 class="font-display text-xl sm:text-3xl font-bold soft-accent-text mb-3">Coming Soon...</h3>
+            <p class="text-gray-400 text-xs sm:text-base leading-relaxed italic">
               New secure protocol in development. Stay tuned for the upcoming system drop. Access will be restricted.
             </p>
           </div>
@@ -561,48 +583,53 @@
     </section>
 
     <!-- КАПСУЛЫ -->
-    <section id="capsules" class="mt-24 sm:mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
-      <h2 class="font-display text-3xl sm:text-5xl font-black text-center mb-12 sm:mb-16 tracking-tight">
+    <section id="capsules" class="mt-20 sm:mt-32 reveal-on-scroll">
+      <h2 class="font-display text-2xl sm:text-5xl font-black text-center mb-10 sm:mb-16 tracking-tight cyber-glitch">
         5 ЦИФРОВЫХ <span class="soft-accent-text">КАПСУЛ</span>
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div onclick="playClick(); openModal('Дизайн', 'Современные интерфейсы, кибер-эстетика, UI/UX и визуальный стиль нового поколения.', 'https://t.me/MLT_Dizain', '🔵', 'DESIGN // 01')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card cursor-pointer group">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Дизайн -->
+        <div onclick="playClick(); openModal('Дизайн', 'Современные интерфейсы, кибер-эстетика, UI/UX и визуальный стиль нового поколения.', 'https://t.me/MLT_Dizain', '🔵', 'DESIGN // 01', 'design.mp4')" class="cyber-card p-6 sm:p-8 flex flex-col justify-between cursor-pointer group">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🔵</div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-3">Дизайн ↗</h3>
+            <div class="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-lg mb-4">🔵</div>
+            <h3 class="font-display text-xl sm:text-2xl font-bold soft-accent-text mb-2">Дизайн ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Современные интерфейсы, кибер-эстетика, UI/UX и визуальный стиль нового поколения.</p>
           </div>
         </div>
 
-        <div onclick="playClick(); openModal('Отношения', 'Психология влияния, коммуникации, связи и цифровой социальный интеллект.', 'https://t.me/MLT_otnoshenia', '🔴', 'RELATIONS // 02')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card cursor-pointer group">
+        <!-- Отношения -->
+        <div onclick="playClick(); openModal('Отношения', 'Психология влияния, коммуникации, связи и цифровой социальный интеллект.', 'https://t.me/MLT_otnoshenia', '🔴', 'RELATIONS // 02', 'relations.mp4')" class="cyber-card p-6 sm:p-8 flex flex-col justify-between cursor-pointer group">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🔴</div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-3">Отношения ↗</h3>
+            <div class="w-10 h-10 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center text-lg mb-4">🔴</div>
+            <h3 class="font-display text-xl sm:text-2xl font-bold soft-accent-text mb-2">Отношения ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Психология влияния, коммуникации, связи и цифровой социальный интеллект.</p>
           </div>
         </div>
 
-        <div onclick="playClick(); openModal('Психология', 'Контроль разума, биохакинг продуктивности, ментальная устойчивость.', 'https://t.me/MLT_Psychology', '⚪', 'PSYCHOLOGY // 03')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between tilt-card cursor-pointer group">
+        <!-- Психология -->
+        <div onclick="playClick(); openModal('Психология', 'Контроль разума, биохакинг продуктивности, ментальная устойчивость.', 'https://t.me/MLT_Psychology', '⚪', 'PSYCHOLOGY // 03', 'psychology.mp4')" class="cyber-card p-6 sm:p-8 flex flex-col justify-between cursor-pointer group">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">⚪</div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-3">Психология ↗</h3>
+            <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/30 text-white flex items-center justify-center text-lg mb-4">⚪</div>
+            <h3 class="font-display text-xl sm:text-2xl font-bold soft-accent-text mb-2">Психология ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Контроль разума, биохакинг продуктивности, ментальная устойчивость.</p>
           </div>
         </div>
 
-        <div onclick="playClick(); openModal('Вайбкодинг', 'Замена старому кодингу. Полное обучение с нуля, продвинутые промты, готовые скрипты и практика.', 'https://t.me/MLT_vibecoding', '🟠', 'VIBECODING // 04')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between md:col-span-1.5 tilt-card cursor-pointer group">
+        <!-- Вайбкодинг -->
+        <div onclick="playClick(); openModal('Вайбкодинг', 'Замена старому кодингу. Полное обучение с нуля, продвинутые промты, готовые скрипты и практика.', 'https://t.me/MLT_vibecoding', '🟠', 'VIBECODING // 04', 'vibecoding.mp4')" class="cyber-card p-6 sm:p-8 flex flex-col justify-between md:col-span-1.5 cursor-pointer group">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🟠</div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-3">Вайбкодинг ↗</h3>
+            <div class="w-10 h-10 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center text-lg mb-4">🟠</div>
+            <h3 class="font-display text-xl sm:text-2xl font-bold soft-accent-text mb-2">Вайбкодинг ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Замена старому кодингу. Полное обучение с нуля, продвинутые промты, готовые скрипты и практика.</p>
           </div>
         </div>
 
-        <div onclick="playClick(); openModal('Заработок', 'Монетизация цифровых навыков, генерация трафика и построение стабильных денежных потоков.', 'https://t.me/MLT_Zarabotok', '🟢', 'EARNING // 05')" class="cyber-card p-7 sm:p-8 flex flex-col justify-between md:col-span-1.5 tilt-card cursor-pointer group">
+        <!-- Заработок -->
+        <div onclick="playClick(); openModal('Заработок', 'Монетизация цифровых навыков, генерация трафика и построение стабильных денежных потоков.', 'https://t.me/MLT_Zarabotok', '🟢', 'EARNING // 05', 'earning.mp4')" class="cyber-card p-6 sm:p-8 flex flex-col justify-between md:col-span-1.5 cursor-pointer group">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition">🟢</div>
-            <h3 class="font-display text-2xl sm:text-3xl font-bold soft-accent-text mb-3">Заработок ↗</h3>
+            <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg mb-4">🟢</div>
+            <h3 class="font-display text-xl sm:text-2xl font-bold soft-accent-text mb-2">Заработок ↗</h3>
             <p class="text-gray-400 text-xs sm:text-sm leading-relaxed italic">Монетизация цифровых навыков, генерация трафика и построение стабильных денежных потоков.</p>
           </div>
         </div>
@@ -610,27 +637,27 @@
     </section>
 
     <!-- СИСТЕМА -->
-    <section id="specs" class="mt-24 sm:mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
-      <div class="cyber-card p-7 sm:p-10 max-w-4xl mx-auto backdrop-blur-xl">
-        <div class="flex items-center justify-between mb-6 font-mono text-xs soft-accent-text uppercase tracking-widest">
+    <section id="specs" class="mt-20 sm:mt-32 reveal-on-scroll">
+      <div class="cyber-card p-6 sm:p-10 max-w-4xl mx-auto backdrop-blur-xl">
+        <div class="flex items-center justify-between mb-5 font-mono text-[11px] soft-accent-text uppercase tracking-widest">
           <span>[ SYSTEM STATUS ]</span>
           <span>ONLINE // SECURE</span>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono">
-          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
-            <span class="block text-gray-500 text-xs mb-1">ENCRYPTION</span>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center font-mono">
+          <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-[10px] mb-1">ENCRYPTION</span>
             <span class="text-white text-xs sm:text-sm font-bold">AES-256</span>
           </div>
-          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
-            <span class="block text-gray-500 text-xs mb-1">NODE</span>
+          <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-[10px] mb-1">NODE</span>
             <span class="text-white text-xs sm:text-sm font-bold">KZ-07</span>
           </div>
-          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
-            <span class="block text-gray-500 text-xs mb-1">PROTOCOL</span>
+          <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-[10px] mb-1">PROTOCOL</span>
             <span class="text-white text-xs sm:text-sm font-bold">ACTIVE</span>
           </div>
-          <div class="p-4 rounded-xl bg-black/40 border border-white/10">
-            <span class="block text-gray-500 text-xs mb-1">VERSION</span>
+          <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
+            <span class="block text-gray-500 text-[10px] mb-1">VERSION</span>
             <span class="text-white text-xs sm:text-sm font-bold">v2.4.0</span>
           </div>
         </div>
@@ -638,11 +665,11 @@
     </section>
 
     <!-- КОНТАКТЫ -->
-    <section id="contact" class="mt-24 sm:mt-32 reveal-on-scroll" style="transition-delay: 0.1s;">
-      <div class="cyber-card p-10 sm:p-16 text-center max-w-3xl mx-auto backdrop-blur-xl tilt-card">
-        <h2 class="font-display text-3xl sm:text-4xl font-black mb-4 soft-accent-text">ВХОД В СИСТЕМУ</h2>
-        <p class="text-gray-400 text-sm sm:text-base mb-8 italic">Готов принять таблетку и изменить правила игры? Пиши лично.</p>
-        <a href="https://t.me/beloysa" target="_blank" onclick="playClick()" class="inline-flex px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl btn-cyber magnetic font-bold text-white text-sm sm:text-base">
+    <section id="contact" class="mt-20 sm:mt-32 reveal-on-scroll">
+      <div class="cyber-card p-8 sm:p-16 text-center max-w-3xl mx-auto backdrop-blur-xl">
+        <h2 class="font-display text-2xl sm:text-4xl font-black mb-3 soft-accent-text cyber-glitch">ВХОД В СИСТЕМУ</h2>
+        <p class="text-gray-400 text-xs sm:text-base mb-7 italic">Готов принять таблетку и изменить правила игры? Пиши лично.</p>
+        <a href="https://t.me/beloysa" target="_blank" onclick="playClick()" class="inline-flex px-8 py-3.5 rounded-2xl btn-cyber magnetic font-bold text-white text-sm text-center">
           Написать в Telegram (@beloysa)
         </a>
       </div>
@@ -725,16 +752,38 @@
       }
     }
 
-    function openModal(title, desc, link, icon, tag) {
+    function openModal(title, desc, link, icon, tag, videoSrc) {
       document.getElementById('modal-title').textContent = title;
       document.getElementById('modal-desc').textContent = desc;
       document.getElementById('modal-link').href = link;
       document.getElementById('modal-icon').textContent = icon;
-      document.getElementById('modal-tag').textContent = `[ ${tag} ]`;
+      document.getElementById('modal-tag').textContent = `[ ${tag || 'PROTOCOL // ACTIVE'} ]`;
+      
+      const videoEl = document.getElementById('modal-video');
+      const fallbackEl = document.getElementById('video-fallback');
+      
+      fallbackEl.classList.add('hidden');
+      videoEl.classList.remove('hidden');
+      videoEl.src = videoSrc;
+      videoEl.load();
+      videoEl.play().catch(() => {
+        videoEl.classList.add('hidden');
+        fallbackEl.classList.remove('hidden');
+      });
+
       document.getElementById('lab-modal').classList.add('open');
     }
 
+    function handleVideoError() {
+      const videoEl = document.getElementById('modal-video');
+      const fallbackEl = document.getElementById('video-fallback');
+      videoEl.classList.add('hidden');
+      fallbackEl.classList.remove('hidden');
+    }
+
     function closeModal() {
+      const videoEl = document.getElementById('modal-video');
+      videoEl.pause();
       document.getElementById('lab-modal').classList.remove('open');
     }
 
@@ -749,6 +798,7 @@
       if (menu) menu.classList.toggle('open');
     }
 
+    // Магнитный эффект для кнопок на ПК
     document.querySelectorAll('.magnetic').forEach(btn => {
       btn.addEventListener('mousemove', e => {
         const rect = btn.getBoundingClientRect();
@@ -774,33 +824,45 @@
       }
     });
 
+    let lastScrollY = window.scrollY;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('active');
+        const currentScrollY = window.scrollY;
+        const scrollingDown = currentScrollY > lastScrollY;
+        
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        } else if (!scrollingDown) {
+          entry.target.classList.remove('active');
+        }
       });
-    }, { threshold: 0.12 });
+      lastScrollY = window.scrollY;
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
     document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-    document.querySelectorAll('.cyber-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    if (!isTouchDevice) {
+      document.querySelectorAll('.cyber-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -4;
-        const rotateY = ((x - centerX) / centerX) * 4;
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      });
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -3;
+          const rotateY = ((x - centerX) / centerX) * 3;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+        });
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
       });
-    });
+    }
   </script>
 </body>
 </html>
